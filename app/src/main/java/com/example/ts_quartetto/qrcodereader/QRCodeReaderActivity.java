@@ -36,6 +36,8 @@ public class QRCodeReaderActivity extends AppCompatActivity {
         //QRCodeScannerの起動
         IntentIntegrator ii = new IntentIntegrator(this);
         ii.setScanningRectangle(700, 700);
+        //インカメ
+        ii.setCameraId(1);
         ii.initiateScan();
     }
     //スキャンした時の結果の処理
