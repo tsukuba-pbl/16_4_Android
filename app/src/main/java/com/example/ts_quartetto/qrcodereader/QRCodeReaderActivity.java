@@ -17,6 +17,9 @@ import com.google.zxing.common.StringUtils;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,6 +31,7 @@ public class QRCodeReaderActivity extends AppCompatActivity {
     private FileOutputStream fout;
     private FileInputStream fin;
     public String file_content = "";
+    public JSONObject file_content_json;
    // private  CompoundBarcodeView mBarcodeView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +65,13 @@ public class QRCodeReaderActivity extends AppCompatActivity {
         } else {
             // カメラで読み取った情報をラベルに表示
             Log.d("TAG", "Scanned! "+intentResult.getContents());
-            //読み取ったデータをグローバル変数に格納
-            file_content = intentResult.getContents();
+            try {
+                //読み取ったJSONデータをパース
+                //file_content = intentResult.getContents();
+                file_content_json = new JSONObject(intentResult.getContents());
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
             // QRコードを読み取った場合アラートダイアログを表示する。
             new AlertDialog.Builder(QRCodeReaderActivity.this)
                     .setTitle("QRコードリーダー")
@@ -71,7 +80,13 @@ public class QRCodeReaderActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //取得したデータをファイルに書き込む
-                            MyWrite(file_content);
+                            //MyWrite(file_content);
+                            try {
+                                MyWrite(file_content_json.getString("voter")+","+file_content_json.getString("name_1")+","+file_content_json.getString("name_2")+","+file_content_json.getString("name_3"));
+                            } catch (JSONException e) {
+                                MyWrite("JSONの型違う・・・");
+                                e.printStackTrace();
+                            }
                             // ファイルに書き込んだ内容をアラートダイアログを表示する。
                             new AlertDialog.Builder(QRCodeReaderActivity.this)
                                     .setTitle("ファイルに書き込み後")
@@ -86,10 +101,10 @@ public class QRCodeReaderActivity extends AppCompatActivity {
                                         }
                                     })
                                     .show();
+                            dialog.dismiss();
                         }
                     })
                     .show();
-
             //Intent intent = new Intent(getApplicationContext(), QRCodeReaderActivity.class);
             //startActivity(intent);
         }
