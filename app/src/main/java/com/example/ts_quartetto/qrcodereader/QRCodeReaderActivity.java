@@ -81,8 +81,9 @@ public class QRCodeReaderActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             //取得したデータをファイルに書き込む
                             //MyWrite(file_content);
+
                             try {
-                                MyWrite(file_content_json.getString("voter")+","+file_content_json.getString("name_1")+","+file_content_json.getString("name_2")+","+file_content_json.getString("name_3"));
+                                MyWrite(file_content_json.getString("voter") + "," + file_content_json.getString("name_1") + "," + file_content_json.getString("name_2") + "," + file_content_json.getString("name_3"));
                             } catch (JSONException e) {
                                 MyWrite("JSONの型違う・・・");
                                 e.printStackTrace();
