@@ -17,10 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    useLibrary 'org.apache.http.legacy'     // 2016.06.03 use HttpClient.class in Android API23
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+  //  compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
@@ -28,4 +30,10 @@ dependencies {
     compile 'com.journeyapps:zxing-android-legacy:2.0.1@aar'
     compile 'com.journeyapps:zxing-android-integration:2.0.1@aar'
     compile 'com.google.zxing:core:3.0.1'
+
+    // 2016.06.03 use HttpClient.class in Android API23
+    compile('org.apache.httpcomponents:httpmime:4.3.6') {
+        exclude module: 'httpclient'
+    }
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
 }

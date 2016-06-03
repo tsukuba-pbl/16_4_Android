@@ -21,13 +21,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class QRCodeReaderActivity extends AppCompatActivity {
-    private String filename = "target.csv";
+    private String filename = "target.csv";                         // app path
+    private String myfilepath = "/storage/emulated/0/target.csv";   // SDcard path
     private FileOutputStream fout;
     private FileInputStream fin;
     public String file_content = "";
@@ -73,39 +75,53 @@ public class QRCodeReaderActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             // QRコードを読み取った場合アラートダイアログを表示する。
-            new AlertDialog.Builder(QRCodeReaderActivity.this)
-                    .setTitle("QRコードリーダー")
-                    .setMessage("読み取ったデータ: " + intentResult.getContents() + "\n" + "書き込む前のファイルの中身\n" + MyRead())
-                    .setNegativeButton("終了", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //取得したデータをファイルに書き込む
-                            //MyWrite(file_content);
+            try {
+                new AlertDialog.Builder(QRCodeReaderActivity.this)
+                        .setTitle("QRコードリーダー")
+                        .setMessage("読み取ったデータ: " + intentResult.getContents() + "\n" + "書き込む前のファイルの中身\n" + MyReadFromSD())
+                        .setNegativeButton("終了", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //取得したデータをファイルに書き込む
+                                //MyWrite(file_content);
 
-                            try {
-                                MyWrite(file_content_json.getString("voter") + "," + file_content_json.getString("name_1") + "," + file_content_json.getString("name_2") + "," + file_content_json.getString("name_3"));
-                            } catch (JSONException e) {
-                                MyWrite("JSONの型違う・・・");
-                                e.printStackTrace();
+                                try {
+                                    MyWriteToSD(file_content_json.getString("voter") + "," + file_content_json.getString("name_1") + "," + file_content_json.getString("name_2") + "," + file_content_json.getString("name_3"));
+                                } catch (JSONException e) {
+                                    try {
+                                        MyWriteToSD("JSONの型違う・・・");
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                // ファイルに書き込んだ内容をアラートダイアログを表示する。
+                                try {
+                                    new AlertDialog.Builder(QRCodeReaderActivity.this)
+                                            .setTitle("ファイルに書き込み後")
+                                            .setMessage( "書き込み後のファイルの中身\n" + MyReadFromSD())
+                                            .setNegativeButton("終了", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    // "Cancel"ボタンが押されたらアラートダイアログを閉じる。
+                                                    dialog.dismiss();
+                                                    Intent intent = new Intent(getApplicationContext(), QRCodeReaderActivity.class);
+                                                    startActivity(intent);
+                                                }
+                                            })
+                                            .show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                dialog.dismiss();
                             }
-                            // ファイルに書き込んだ内容をアラートダイアログを表示する。
-                            new AlertDialog.Builder(QRCodeReaderActivity.this)
-                                    .setTitle("ファイルに書き込み後")
-                                    .setMessage( "書き込み後のファイルの中身\n" + MyRead())
-                                    .setNegativeButton("終了", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // "Cancel"ボタンが押されたらアラートダイアログを閉じる。
-                                            dialog.dismiss();
-                                            Intent intent = new Intent(getApplicationContext(), QRCodeReaderActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    })
-                                    .show();
-                            dialog.dismiss();
-                        }
-                    })
-                    .show();
+                        })
+                        .show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //Intent intent = new Intent(getApplicationContext(), QRCodeReaderActivity.class);
             //startActivity(intent);
         }
@@ -151,5 +167,43 @@ public class QRCodeReaderActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return "";
+    }
+
+    private void MyWriteToSD(String str) throws IOException {
+        //  File myFile = new File(Environment.getExternalStorageDirectory(), filename);
+        File myFile = new File(myfilepath);
+        if (!myFile.exists())
+            myFile.createNewFile();
+        FileOutputStream fos;
+        byte[] data = str.getBytes();
+        try {
+            fos = new FileOutputStream(myFile, true);
+            fos.write(data);
+            fos.write('\n');
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            System.out.println("e: " + e);
+        }
+    }
+
+    private String MyReadFromSD() throws IOException {
+        FileInputStream is = null;
+        String info = null;
+        //   String fpath = Environment.getExternalStorageDirectory() + filename;
+        try {
+            is = new FileInputStream(myfilepath);
+            byte[] car = new byte[10];
+            int len = 0;
+            while(-1 != (len = is.read(car)))
+            {
+                info += new String(car, 0, len);
+                System.out.println(info);
+            }
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
+
+        return info;
     }
 }
