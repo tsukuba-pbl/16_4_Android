@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             HttpClient httpClient = new DefaultHttpClient();
                             //HttpPost httpPost = new HttpPost("http://ts-quartetto.herokuapp.com/sprint1_9/receive_file.php");
-                            HttpPost httpPost = new HttpPost("http://192.168.0.213/16-4_Web/sprint2_9/receive_file.php");
+                            HttpPost httpPost = new HttpPost("http://192.168.11.8/16-4_Web/sprint2_9/receive_file.php");
                             ResponseHandler<String> responseHandler = new BasicResponseHandler();
                             MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                             File file = new File(myfilepath);
