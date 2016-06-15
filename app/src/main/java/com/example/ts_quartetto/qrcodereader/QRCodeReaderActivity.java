@@ -127,48 +127,6 @@ public class QRCodeReaderActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 指定されたファイルにデータを書き込む関数
-     * @param data
-     */
-    private void MyWrite(String data)
-    {
-        try {
-            //testText.setText("Write button");
-            fout = openFileOutput(filename, Activity.MODE_APPEND);
-            fout.write(data.getBytes());
-            fout.write("\n".getBytes());
-            fout.flush();
-            fout.close();
-        }catch(Exception e){}
-    }
-
-    /**
-     * 指定されたファイルからデータを読み込んでデータを返却する関数
-     * @return
-     */
-    private String MyRead() {
-        try {
-            fin = this.openFileInput(filename);
-            byte[] bytes = new byte[1024];
-            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-            while (fin.read(bytes) != -1) {
-                arrayOutputStream.write(bytes, 0, bytes.length);
-            }
-            fin.close();
-            arrayOutputStream.close();
-            //ファイルの中のデータを取得
-            String content = new String(arrayOutputStream.toByteArray());
-            return content;
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
     private void MyWriteToSD(String str) throws IOException {
         //  File myFile = new File(Environment.getExternalStorageDirectory(), filename);
         File myFile = new File(myfilepath);
@@ -189,7 +147,7 @@ public class QRCodeReaderActivity extends AppCompatActivity {
 
     private String MyReadFromSD() throws IOException {
         FileInputStream is = null;
-        String info = null;
+        String info = "";
         //   String fpath = Environment.getExternalStorageDirectory() + filename;
         try {
             is = new FileInputStream(myfilepath);
