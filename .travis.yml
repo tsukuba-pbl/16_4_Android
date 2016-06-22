@@ -1,4 +1,5 @@
-language: android
+--- 
+before_install: 
+  - "chmod +x gradlew"
 jdk: oraclejdk7
-before_install:
-	- chmod +x gradlew
+language: android
