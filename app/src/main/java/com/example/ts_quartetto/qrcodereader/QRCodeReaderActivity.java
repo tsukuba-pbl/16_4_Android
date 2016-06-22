@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.common.StringUtils;
@@ -28,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class QRCodeReaderActivity extends AppCompatActivity {
+    private Boolean isJSONFile = false;
     private String filename = "target.csv";                         // app path
     private String myfilepath = "/storage/emulated/0/target.csv";   // SDcard path
     private FileOutputStream fout;
@@ -70,13 +72,22 @@ public class QRCodeReaderActivity extends AppCompatActivity {
             try {
                 //読み取ったJSONデータをパース
                 //file_content = intentResult.getContents();
-                file_content_json = new JSONObject(intentResult.getContents());
+                /*20160621 DUYAN :
+                    If received info which from QRcode is not a standard JSON file,
+                    myStr could not be printf or compare, why ???
+                */
+                String myStr = new String(intentResult.getContents());
+                file_content_json = new JSONObject(myStr);
+                // isJOSNFile set to true only if received a standard JSON file, no exception occurred
+                isJSONFile = true;
             }catch (JSONException e){
                 e.printStackTrace();
             }
             // QRコードを読み取った場合アラートダイアログを表示する。
-            try {
-                new AlertDialog.Builder(QRCodeReaderActivity.this)
+            if(isJSONFile)
+            {
+                try {
+                    new AlertDialog.Builder(QRCodeReaderActivity.this)
                         .setTitle("QRコードリーダー")
                         .setMessage("読み取ったデータ: " + intentResult.getContents() + "\n" + "書き込む前のファイルの中身\n" + MyReadFromSD())
                         .setNegativeButton("終了", new DialogInterface.OnClickListener() {
@@ -119,8 +130,13 @@ public class QRCodeReaderActivity extends AppCompatActivity {
                             }
                         })
                         .show();
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                Toast.makeText(QRCodeReaderActivity.this, "Not a standard JSON file !!!, Pls try again ~~", Toast.LENGTH_SHORT).show();
             }
             //Intent intent = new Intent(getApplicationContext(), QRCodeReaderActivity.class);
             //startActivity(intent);
