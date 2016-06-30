@@ -32,6 +32,6 @@ public class QRCodeReaderActivityTest {
     public void read_CSV() throws Exception{
 //        qa.MyWriteToSD("test");
 //        assertEquals(qa.MyReadFromSD(),"test");
-        assertEquals(4, 2 + 2);
+        assertEquals(4, 2 + 3);
     }
 }
