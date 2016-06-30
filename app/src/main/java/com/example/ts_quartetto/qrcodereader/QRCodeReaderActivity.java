@@ -143,7 +143,7 @@ public class QRCodeReaderActivity extends AppCompatActivity {
         }
     }
 
-    private void MyWriteToSD(String str) throws IOException {
+    public void MyWriteToSD(String str) throws IOException {
         //  File myFile = new File(Environment.getExternalStorageDirectory(), filename);
         File myFile = new File(myfilepath);
         if (!myFile.exists())
@@ -161,7 +161,7 @@ public class QRCodeReaderActivity extends AppCompatActivity {
         }
     }
 
-    private String MyReadFromSD() throws IOException {
+    public String MyReadFromSD() throws IOException {
         FileInputStream is = null;
         String info = "";
         //   String fpath = Environment.getExternalStorageDirectory() + filename;
