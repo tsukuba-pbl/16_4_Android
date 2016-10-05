@@ -12,10 +12,11 @@ import static org.junit.Assert.*;
  * Created by tsuruda_tomohiro on 2016/06/30.
  */
 public class QRCodeReaderActivityTest {
-    private String myfilepath = "/storage/emulated/0/target.csv";   // SDcard path
-    QRCodeReaderActivity qa;
+    private String mytestpath = "/storage/emulated/0/test.csv";   // SDcard path
+    FileHandler fh = new FileHandler();
     @Before
     public void setUp() throws Exception {
+        fh.DeleteFromSD(mytestpath);
 //        try {
 //            //ファイルの中身削除
 //            File file = new File(myfilepath);
@@ -28,10 +29,16 @@ public class QRCodeReaderActivityTest {
     public void tearDown() throws Exception {
 
     }
+
+    /**
+     * ファイル書き込みが出来るかどうか
+     * @throws Exception
+     */
     @Test
-    public void read_CSV() throws Exception{
-//        qa.MyWriteToSD("test");
-//        assertEquals(qa.MyReadFromSD(),"test");
-        assertEquals(4, 2 + 2);
+    public void isWrite() throws Exception{
+        fh.DeleteFromSD(mytestpath);
+        String data = "test,111,222,333";
+        fh.WriteToSD(mytestpath, data);
+        assertEquals(data+"\n", fh.ReadFromSD(mytestpath));
     }
 }
