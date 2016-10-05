@@ -19,10 +19,13 @@ public class QRCodeReaderActivityTest {
     private String json_msg =  "{\"ID\":\"test\",\"Name\":\"テスト\",\"Name_1\":\"222\",\"Name_2\":\"999\",\"Name_3\":\"333\"}";
     private String correct_json_msg = "{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
 
+    private String mytestpath = "/storage/emulated/0/test.csv";   // SDcard path
+    FileHandler fh = new FileHandler();
+
     @Before
     public void setUp() throws Exception {
         System.out.println("setUp----------------------------------------");
-
+        fh.DeleteFromSD(mytestpath);
     }
 
     @After
@@ -48,9 +51,21 @@ public class QRCodeReaderActivityTest {
     public void WriteCorrectJson() throws Exception {
         try {
             jsonObject = new JSONObject(correct_json_msg);
-        } catch (JSONException e) {}
+        } catch (JSONException e) {
+        }
         qh.Clear();
         qh.Save(jsonObject);
         assertEquals("test,222,999,333\n", qh.Read());
+    }
+    /**
+     * ファイル書き込みが出来るかどうか
+     * @throws Exception
+     */
+    @Test
+    public void isWrite() throws Exception{
+        fh.DeleteFromSD(mytestpath);
+        String data = "test,111,222,333";
+        fh.WriteToSD(mytestpath, data);
+        assertEquals(data+"\n", fh.ReadFromSD(mytestpath));
     }
 }
