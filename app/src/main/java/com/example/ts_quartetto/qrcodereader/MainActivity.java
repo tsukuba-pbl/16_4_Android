@@ -43,8 +43,7 @@ import java.net.MalformedURLException;
 import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
-    private String filename = "target.csv";
-    private String myfilepath = "/storage/emulated/0/target.csv";   // SDcard path
+    public QRHandler qrHandler = new QRHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     //ファイルの中身削除
-                    File file = new File(myfilepath);
-                    file.delete();
+                    qrHandler.Clear();
                 }catch(Exception e){}
             }
         });
@@ -89,19 +87,12 @@ public class MainActivity extends AppCompatActivity {
                             HttpPost httpPost = new HttpPost("http://192.168.0.213/16-4_Web/aggregate_app/receive_file.php");
                             ResponseHandler<String> responseHandler = new BasicResponseHandler();
                             MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                            File file = new File(myfilepath);
-                            FileBody fileBody = new FileBody(file);
+                            FileBody fileBody = new FileBody(new File(qrHandler.filepath));
                             multipartEntity.addPart("file", fileBody);
                             httpPost.setEntity(multipartEntity);
                             httpClient.execute(httpPost, responseHandler);
-                            Log.d("POST", "COMPLETE");
-                        } catch (MalformedURLException e) {
-                            Log.d("POST", "Error");
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            Log.d("POST", "IOError");
-                            e.printStackTrace();
-                        }
+                        } catch (MalformedURLException e) {e.printStackTrace();
+                        } catch (IOException e) {e.printStackTrace();}
                     }
                 })).start();
             }

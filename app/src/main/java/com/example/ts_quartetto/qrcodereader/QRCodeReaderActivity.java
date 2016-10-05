@@ -32,7 +32,7 @@ public class QRCodeReaderActivity extends AppCompatActivity {
     private Boolean isJSONFile = false;
     public JSONObject file_content_json;
 
-    public FileHandler fh = new FileHandler();
+    public QRHandler qrHandler = new QRHandler();
 
    // private  CompoundBarcodeView mBarcodeView;
     @Override
@@ -87,19 +87,19 @@ public class QRCodeReaderActivity extends AppCompatActivity {
             try {
                 new AlertDialog.Builder(QRCodeReaderActivity.this)
                     .setTitle("QRコードリーダー")
-                    .setMessage("読み取ったデータ: " + intentResult.getContents() + "\n" + "書き込む前のファイルの中身\n" + fh.ReadFromSD())
+                    .setMessage("読み取ったデータ: " + intentResult.getContents() + "\n" + "書き込む前のファイルの中身\n" + qrHandler.Read())
                     .setNegativeButton("終了", new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //取得したデータをファイルに書き込む
-                            fh.SaveJSON(file_content_json);
+                            qrHandler.Save(file_content_json);
 
                             // ファイルに書き込んだ内容をアラートダイアログを表示する。
                             try {
                                 new AlertDialog.Builder(QRCodeReaderActivity.this)
                                         .setTitle("ファイルに書き込み後")
-                                        .setMessage( "書き込み後のファイルの中身\n" + fh.ReadFromSD())
+                                        .setMessage( "書き込み後のファイルの中身\n" + qrHandler.Read())
                                         .setNegativeButton("終了", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
