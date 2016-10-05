@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class QRHandler extends FileHandler
 {
-    public String filepath = "/storage/emulated/0/target.csv";   // SDcard path
+    private String filepath = "/storage/emulated/0/target.csv";   // SDcard path
 
     public void Save(JSONObject json_obj) {
         try {
@@ -33,4 +33,8 @@ public class QRHandler extends FileHandler
         file.delete();
     }
 
+    public String GetFilePath()
+    {
+        return filepath;
+    }
 }

@@ -43,7 +43,10 @@ import java.net.MalformedURLException;
 import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
-    public QRHandler qrHandler = new QRHandler();
+    private String server_file_name = new String("file");
+    private String server_addr = new String("http://192.168.0.213/16-4_Web/aggregate_app/receive_file.php");
+    private QRHandler qrHandler = new QRHandler();
+    private Utility utility = new Utility();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,22 +80,10 @@ public class MainActivity extends AppCompatActivity {
         SubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("POST", "CLick");
                 (new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            HttpClient httpClient = new DefaultHttpClient();
-                            //HttpPost httpPost = new HttpPost("http://ts-quartetto.herokuapp.com/sprint1_9/receive_file.php");
-                            HttpPost httpPost = new HttpPost("http://192.168.0.213/16-4_Web/aggregate_app/receive_file.php");
-                            ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                            MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                            FileBody fileBody = new FileBody(new File(qrHandler.filepath));
-                            multipartEntity.addPart("file", fileBody);
-                            httpPost.setEntity(multipartEntity);
-                            httpClient.execute(httpPost, responseHandler);
-                        } catch (MalformedURLException e) {e.printStackTrace();
-                        } catch (IOException e) {e.printStackTrace();}
+                        utility.Http(qrHandler.GetFilePath(), server_file_name, server_addr);
                     }
                 })).start();
             }
