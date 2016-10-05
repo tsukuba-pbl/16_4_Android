@@ -19,16 +19,16 @@ public class FileHandler {
 
     public void WriteToSD(String path, String str) throws IOException {
         File myFile = new File(path);
-        if (!myFile.exists())
-            myFile.createNewFile();
-        FileOutputStream fos;
-        byte[] data = str.getBytes();
-        try {
-            fos = new FileOutputStream(myFile, true);
-            fos.write(data);
-            fos.write('\n');
-            fos.flush();
-            fos.close();
+            if (!myFile.exists())
+                myFile.createNewFile();
+            FileOutputStream fos;
+            byte[] data = str.getBytes();
+            try {
+                fos = new FileOutputStream(myFile, true);
+                fos.write(data);
+                fos.write('\n');
+                fos.flush();
+                fos.close();
         } catch (Exception e) { System.out.println("e: " + e);}
     }
 
