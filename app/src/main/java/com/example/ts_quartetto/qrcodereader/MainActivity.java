@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 (new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        utility.Http(qrHandler.GetFilePath(), server_file_name, server_addr);
+                        utility.HttpPost(qrHandler.GetFilePath(), server_file_name, server_addr);
                     }
                 })).start();
             }

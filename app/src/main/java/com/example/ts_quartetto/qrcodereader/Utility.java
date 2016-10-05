@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
  */
 public class Utility {
 
-    public void Http(String filepath, String filename, String addr)
+    public void HttpPost(String filepath, String filename, String addr)
     {
         try {
             HttpClient httpClient = new DefaultHttpClient();
