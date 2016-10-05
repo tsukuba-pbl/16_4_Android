@@ -29,8 +29,7 @@ public class QRHandler extends FileHandler
 
     public void Clear()
     {
-        File file = new File(filepath);
-        file.delete();
+        DeleteFromSD(filepath);
     }
 
     public String GetFilePath()

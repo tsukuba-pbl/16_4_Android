@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 }catch(Exception e){}
             }
         });
-        
+
         Button SubmitButton = (Button) findViewById(R.id.button_submit);
         SubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override

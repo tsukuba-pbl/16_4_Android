@@ -11,6 +11,12 @@ import java.io.IOException;
  */
 public class FileHandler {
 
+    public void DeleteFromSD(String filepath)
+    {
+        File file = new File(filepath);
+        file.delete();
+    }
+
     public void WriteToSD(String path, String str) throws IOException {
         File myFile = new File(path);
         if (!myFile.exists())
