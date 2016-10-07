@@ -83,7 +83,6 @@ public class QRCodeReaderActivityTest {
      */
     @Test
     public void isWrite() throws Exception{
-        fh.DeleteFromSD(mytestpath);
         String data = "test,111,222,333";
         fh.WriteToSD(mytestpath, data);
         assertEquals(data+"\n", fh.ReadFromSD(mytestpath));
