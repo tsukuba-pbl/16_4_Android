@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by tsuruda_tomohiro on 2016/06/30.
@@ -45,6 +46,8 @@ public class QRCodeReaderActivityTest {
         } catch (JSONException e) {}
         qh.Clear();
         qh.Save(jsonObject);
+      //  assertEquals(" ", qh.Read());             // fail
+      //  assertEquals("asda", qh.Read());          // fail
         assertEquals("", qh.Read());
     }
 
@@ -60,6 +63,9 @@ public class QRCodeReaderActivityTest {
         qh.Save(jsonObject);
         qh.Clear();
         qh.Save(jsonObject);
+    //    assertEquals("", qh.Read());              // fail
+    //    assertEquals(" ", qh.Read());              // fail
+    //    assertEquals("asdaf", qh.Read());              // fail
         assertEquals("test,222,999,333\n", qh.Read());
     }
 
@@ -72,8 +78,13 @@ public class QRCodeReaderActivityTest {
             jsonObject = new JSONObject(correct_json_msg);
         }catch  (JSONException e){}
         qh.Save(jsonObject);
+    //  assertNull(qh.Read());                 // fail
         assertNotNull(qh.Read());
+    //    assertEquals("asd", qh.Read());      // fail
+
         qh.Clear();
+     //   assertEquals(" ", qh.Read());        // fail
+     //   assertEquals("asdf", qh.Read());     // fail
         assertEquals("", qh.Read());
     }
 
