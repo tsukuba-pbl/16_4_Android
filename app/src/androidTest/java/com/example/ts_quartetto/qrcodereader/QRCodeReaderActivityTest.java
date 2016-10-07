@@ -74,7 +74,7 @@ public class QRCodeReaderActivityTest {
         qh.Save(jsonObject);
         assertNotNull(qh.Read());
         qh.Clear();
-        assertEquals("", qh.Read());
+        assertEquals("h", qh.Read());
     }
 
     /**
