@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -47,16 +48,34 @@ public class QRCodeReaderActivityTest {
         assertEquals("", qh.Read());
     }
 
+    /*
+    *   target format is voter_id, name_1, name_2, name_3
+    *   Write will success if format is correct
+    * */
     @Test
     public void WriteCorrectJson() throws Exception {
         try {
             jsonObject = new JSONObject(correct_json_msg);
-        } catch (JSONException e) {
-        }
+        } catch (JSONException e) {}
+        qh.Save(jsonObject);
         qh.Clear();
         qh.Save(jsonObject);
         assertEquals("test,222,999,333\n", qh.Read());
     }
+
+    /*
+    *  confirm target file has been deleted after Clear() be called
+    * */
+    @Test
+    public void ClearFile() throws IOException {
+        try{
+            jsonObject = new JSONObject(correct_json_msg);
+        }catch  (JSONException e){}
+        assertNotNull(qh.Read());
+        qh.Clear();
+        assertEquals("", qh.Read());
+    }
+
     /**
      * ファイル書き込みが出来るかどうか
      * @throws Exception
