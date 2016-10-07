@@ -71,6 +71,7 @@ public class QRCodeReaderActivityTest {
         try{
             jsonObject = new JSONObject(correct_json_msg);
         }catch  (JSONException e){}
+        qh.Save(jsonObject);
         assertNotNull(qh.Read());
         qh.Clear();
         assertEquals("", qh.Read());
