@@ -7,8 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by tsuruda_tomohiro on 2016/06/30.
@@ -44,26 +46,55 @@ public class QRCodeReaderActivityTest {
         } catch (JSONException e) {}
         qh.Clear();
         qh.Save(jsonObject);
+      //  assertEquals(" ", qh.Read());             // fail
+      //  assertEquals("asda", qh.Read());          // fail
         assertEquals("", qh.Read());
     }
 
+    /*
+    *   target format is voter_id, name_1, name_2, name_3
+    *   Write will success if format is correct
+    * */
     @Test
     public void WriteCorrectJson() throws Exception {
         try {
             jsonObject = new JSONObject(correct_json_msg);
-        } catch (JSONException e) {
-        }
+        } catch (JSONException e) {}
+        qh.Save(jsonObject);
         qh.Clear();
         qh.Save(jsonObject);
+    //    assertEquals("", qh.Read());              // fail
+    //    assertEquals(" ", qh.Read());              // fail
+    //    assertEquals("asdaf", qh.Read());              // fail
         assertEquals("test,222,999,333\n", qh.Read());
     }
+
+    /*
+    *  confirm target file has been deleted after Clear() be called
+    * */
+    @Test
+    public void ClearFile() throws IOException {
+        try{
+            jsonObject = new JSONObject(correct_json_msg);
+        }catch  (JSONException e){}
+        qh.Save(jsonObject);
+    //  assertNull(qh.Read());                 // fail
+        assertNotNull(qh.Read());
+    //    assertEquals("asd", qh.Read());      // fail
+
+        qh.Clear();
+
+     //   assertEquals(" ", qh.Read());        // fail
+     //   assertEquals("asdf", qh.Read());     // fail
+        assertEquals("", qh.Read());
+    }
+
     /**
      * ファイル書き込みが出来るかどうか
      * @throws Exception
      */
     @Test
     public void isWrite() throws Exception{
-        fh.DeleteFromSD(mytestpath);
         String data = "test,111,222,333";
         fh.WriteToSD(mytestpath, data);
         assertEquals(data+"\n", fh.ReadFromSD(mytestpath));
