@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by we on 2016/10/5.
@@ -32,6 +33,12 @@ public class Utility {
             httpClient.execute(httpPost, responseHandler);
         } catch (MalformedURLException e) {e.printStackTrace();
         } catch (IOException e) {e.printStackTrace();}
+    }
+
+    public String GetDate()
+    {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return sDateFormat.format(new java.util.Date());
     }
 
 }

@@ -5,6 +5,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by we on 2016/10/5.
@@ -12,10 +17,12 @@ import java.io.IOException;
 public class QRHandler extends FileHandler
 {
     private String filepath = "/storage/emulated/0/target.csv";   // SDcard path
+    private Utility utility = new Utility();
 
     public void Save(JSONObject json_obj) {
         try {
-            WriteToSD(filepath, json_obj.getString("voter_id") + "," + json_obj.getString("name_1") + "," + json_obj.getString("name_2") + "," + json_obj.getString("name_3"));
+            WriteToSD(filepath, json_obj.getString("voter_id") + "," + json_obj.getString("name_1") + "," + json_obj.getString("name_2") + "," + json_obj.getString("name_3")
+                        + "," + utility.GetDate());
         }
         catch (JSONException e) {e.printStackTrace();  }
         catch (IOException e)   {e.printStackTrace();  }
