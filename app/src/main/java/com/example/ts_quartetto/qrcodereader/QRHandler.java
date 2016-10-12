@@ -17,14 +17,12 @@ import java.util.Date;
 public class QRHandler extends FileHandler
 {
     private String filepath = "/storage/emulated/0/target.csv";   // SDcard path
-
+    private Utility utility = new Utility();
 
     public void Save(JSONObject json_obj) {
         try {
-            SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            String date = sDateFormat.format(new java.util.Date());
             WriteToSD(filepath, json_obj.getString("voter_id") + "," + json_obj.getString("name_1") + "," + json_obj.getString("name_2") + "," + json_obj.getString("name_3")
-                        + "," + date);
+                        + "," + utility.GetDate());
         }
         catch (JSONException e) {e.printStackTrace();  }
         catch (IOException e)   {e.printStackTrace();  }
