@@ -1,9 +1,12 @@
 package com.example.ts_quartetto.qrcodereader;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -41,7 +44,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 
@@ -50,11 +52,16 @@ public class MainActivity extends AppCompatActivity {
     private String server_addr = new String("http://192.168.0.119/16-4_Web/aggregate_app/receive_file.php");
     private QRHandler qrHandler = new QRHandler();
     private Utility utility = new Utility();
+    private String mac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wInfo = wifiManager.getConnectionInfo();
+        mac = wInfo.getMacAddress();
 
         //create QRCodeReader button
         //ボタン押されたらQRコードリーダの表示
@@ -86,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 (new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        qrHandler.ChangeFilePath(mac);     // change filename : mac_date.csv
                         utility.HttpPost(qrHandler.GetFilePath(), server_file_name, server_addr);
                     }
                 })).start();

@@ -1,5 +1,9 @@
 package com.example.ts_quartetto.qrcodereader;
 
+import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -35,9 +39,15 @@ public class Utility {
         } catch (IOException e) {e.printStackTrace();}
     }
 
-    public String GetDate()
+    public String GetVoteDate()
     {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return sDateFormat.format(new java.util.Date());
+    }
+
+    public String GetFileDate()
+    {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd_hhmm_ss");
         return sDateFormat.format(new java.util.Date());
     }
 
