@@ -35,6 +35,7 @@ public class Utility {
             multipartEntity.addPart(filename, fileBody);
             httpPost.setEntity(multipartEntity);
             httpClient.execute(httpPost, responseHandler);
+            System.out.println("333AAAAAAAAAAAAAAAAAAAAAAAA");
         } catch (MalformedURLException e) {e.printStackTrace();
         } catch (IOException e) {e.printStackTrace();}
     }

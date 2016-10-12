@@ -91,14 +91,21 @@ public class MainActivity extends AppCompatActivity {
         SubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("111----------------");
                 (new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        utility.HttpPost(qrHandler.ChangeFilePath(mac), server_file_name, server_addr);
+                        System.out.println("222@@@@@@@@@@@@@@@@@@@@@@");
+                        try {
+                            utility.HttpPost(qrHandler.ChangeFilePath(mac), server_file_name, server_addr);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 })).start();
             }
         });
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
    //     client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
