@@ -99,9 +99,9 @@ public class QRCodeReaderActivityTest {
             jsonObject = new JSONObject(correct_json_msg);
         } catch (JSONException e) {}
         qh.Save(jsonObject);
-        assertNotSame("test,222,999,333", qh.Read());
-
-//        assertEquals("test,222,999,333", qh.Read());  // fail
+        assertEquals("test,222,999,333", qh.Read().substring(0,16));
+//        assertEquals("test,222,999,333\n", qh.Read().substring(0,17));    // fail
+//        assertEquals("test,222,999,333", qh.Read());                      // fail
     }
 
     /**
