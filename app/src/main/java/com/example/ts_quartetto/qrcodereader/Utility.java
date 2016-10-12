@@ -41,13 +41,13 @@ public class Utility {
 
     public String GetVoteDate()
     {
-        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return sDateFormat.format(new java.util.Date());
     }
 
     public String GetFileDate()
     {
-        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd_hhmm_ss");
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd_HHmm_ss");
         return sDateFormat.format(new java.util.Date());
     }
 
