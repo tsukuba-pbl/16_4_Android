@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo wInfo = wifiManager.getConnectionInfo();
         mac = wInfo.getMacAddress();
+        mac = mac.replaceAll("[^0-9a-zA-Z]","");
 
         //create QRCodeReader button
         //ボタン押されたらQRコードリーダの表示
@@ -93,8 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 (new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        qrHandler.ChangeFilePath(mac);     // change filename : mac_date.csv
-                        utility.HttpPost(qrHandler.GetFilePath(), server_file_name, server_addr);
+                        utility.HttpPost(qrHandler.ChangeFilePath(mac), server_file_name, server_addr);
                     }
                 })).start();
             }

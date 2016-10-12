@@ -27,9 +27,13 @@ public class QRHandler extends FileHandler {
         return filepath;
     }
 
-    public void ChangeFilePath(String mac){
+    public String ChangeFilePath(String mac){
+        String newFileName = GetBasePath() + mac + "_" + utility.GetFileDate() + ".csv";
+
         File newFile = new File(filepath);
-        newFile.renameTo(new File(GetBasePath() + mac + "_" + utility.GetFileDate() + ".csv"));
+        newFile.renameTo(new File(newFileName));
+
+        return newFileName;
     }
 
     public void Save(JSONObject json_obj) {
