@@ -91,11 +91,9 @@ public class MainActivity extends AppCompatActivity {
         SubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("111----------------");
                 (new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println("222@@@@@@@@@@@@@@@@@@@@@@");
                         try {
                             utility.HttpPost(qrHandler.ChangeFilePath(mac), server_file_name, server_addr);
                         } catch (IOException e) {

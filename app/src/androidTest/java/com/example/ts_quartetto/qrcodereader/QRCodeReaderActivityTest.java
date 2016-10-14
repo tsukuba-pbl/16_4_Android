@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -87,6 +88,27 @@ public class QRCodeReaderActivityTest {
      //   assertEquals(" ", qh.Read());        // fail
      //   assertEquals("asdf", qh.Read());     // fail
         assertEquals("", qh.Read());
+    }
+
+    /*
+    *  confirm target file contains correct datetime
+    * */
+    @Test
+    public void ContainDateInJson() throws IOException {
+        try{
+            jsonObject = new JSONObject(correct_json_msg);
+        }catch  (JSONException e){}
+        qh.Save(jsonObject);
+
+        // yyyy/mm/dd
+        String reg3 = "((((1[6-9]|[2-9]\\d)\\d{2})/(1[02]|0?[13578])/([12]\\d|3[01]|0?[1-9]))|(((1[6-9]|[2-9]\\d)\\d{2})/(1[012]|0?[13456789])/([12]\\d|30|0?[1-9]))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(1\\d|2[0-8]|0?[1-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))";
+        // HH:mm:ss
+        String reg4 = "([01]?\\d|2[0-3]):[0-5]?\\d:[0-5]?\\d";
+
+        Boolean result1 = Pattern.matches(reg3, qh.Read().substring(17,27));    // yyyy/mm/dd
+        Boolean result2 = Pattern.matches(reg4, qh.Read().substring(28,35));    // HH:mm:ss (exclude '\n')
+        assertEquals(result1, true);
+        assertEquals(result2, true);
     }
 
     /*

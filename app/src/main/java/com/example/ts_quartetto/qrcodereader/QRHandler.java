@@ -52,8 +52,10 @@ public class QRHandler extends FileHandler {
 
     public void Save(JSONObject json_obj) {
         try {
-            WriteToSD(filepath, json_obj.getString("voter_id") + "," + json_obj.getString("name_1") + "," + json_obj.getString("name_2") + "," + json_obj.getString("name_3")
-                    + "," + utility.GetVoteDate());
+            WriteToSD(
+                    GetFilePath(),
+                    json_obj.getString("voter_id") + "," + json_obj.getString("name_1") + "," + json_obj.getString("name_2") + "," + json_obj.getString("name_3") + "," +
+                        utility.GetVoteDate());
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
