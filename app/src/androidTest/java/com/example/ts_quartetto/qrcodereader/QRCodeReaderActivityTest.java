@@ -8,6 +8,10 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -87,6 +91,24 @@ public class QRCodeReaderActivityTest {
      //   assertEquals(" ", qh.Read());        // fail
      //   assertEquals("asdf", qh.Read());     // fail
         assertEquals("", qh.Read());
+    }
+
+    /*
+    *  confirm target file contains correct datetime BY dateformat
+    * */
+    @Test
+    public void ContainDateByDateFormat() throws IOException, ParseException {
+        try{
+            jsonObject = new JSONObject(correct_json_msg);
+        }catch  (JSONException e){}
+        qh.Save(jsonObject);
+        String res = qh.Read().substring(17, 36);
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        try {
+            assertNotNull(format.parse(res));   // if res is incorrect, return NULL
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     /*

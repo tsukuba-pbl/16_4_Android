@@ -1,10 +1,16 @@
 package com.example.ts_quartetto.qrcodereader;
 
+import android.provider.MediaStore;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,19 +33,29 @@ public class QRHandler extends FileHandler {
         return filepath;
     }
 
-    public String ChangeFilePath(String mac){
+    /*
+    *   copy file from filepath and rename as MacAddr_CurrentDate.csv
+    *   filepath will not be deleted
+    * */
+    public String ChangeFilePath(String mac) throws IOException {
         String newFileName = GetBasePath() + mac + "_" + utility.GetFileDate() + ".csv";
 
-        File newFile = new File(filepath);
-        newFile.renameTo(new File(newFileName));
+        File from = new File(filepath);
+        File to = new File(newFileName);
+
+        FileChannel in = new FileInputStream(from).getChannel();
+        FileChannel out = new FileOutputStream(to).getChannel();
+        out.transferFrom( in, 0, in.size() );
 
         return newFileName;
     }
 
     public void Save(JSONObject json_obj) {
         try {
-            WriteToSD(filepath, json_obj.getString("voter_id") + "," + json_obj.getString("name_1") + "," + json_obj.getString("name_2") + "," + json_obj.getString("name_3")
-                    + "," + utility.GetVoteDate());
+            WriteToSD(
+                    GetFilePath(),
+                    json_obj.getString("voter_id") + "," + json_obj.getString("name_1") + "," + json_obj.getString("name_2") + "," + json_obj.getString("name_3") + "," +
+                        utility.GetVoteDate());
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
