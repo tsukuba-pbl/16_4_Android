@@ -94,42 +94,20 @@ public class QRCodeReaderActivityTest {
     }
 
     /*
-    *  confirm target file contains correct datetime BY regular expression
-    * */
-    @Test
-    public void ContainDateByRegExp() throws IOException {
-        try{
-            jsonObject = new JSONObject(correct_json_msg);
-        }catch  (JSONException e){}
-        qh.Save(jsonObject);
-
-        // yyyy/mm/dd
-        String reg3 = "((((1[6-9]|[2-9]\\d)\\d{2})/(1[02]|0?[13578])/([12]\\d|3[01]|0?[1-9]))|(((1[6-9]|[2-9]\\d)\\d{2})/(1[012]|0?[13456789])/([12]\\d|30|0?[1-9]))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(1\\d|2[0-8]|0?[1-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))";
-        // HH:mm:ss
-        String reg4 = "([01]?\\d|2[0-3]):[0-5]?\\d:[0-5]?\\d";
-
-        Boolean result1 = Pattern.matches(reg3, qh.Read().substring(17,27));    // yyyy/mm/dd
-        Boolean result2 = Pattern.matches(reg4, qh.Read().substring(28,35));    // HH:mm:ss (exclude '\n')
-        assertEquals(result1, true);
-        assertEquals(result2, true);
-    }
-
-    /*
     *  confirm target file contains correct datetime BY dateformat
     * */
     @Test
-    public void ContainDateByDateFormat() throws IOException {
+    public void ContainDateByDateFormat() throws IOException, ParseException {
         try{
             jsonObject = new JSONObject(correct_json_msg);
         }catch  (JSONException e){}
         qh.Save(jsonObject);
         String res = qh.Read().substring(17, 36);
-        System.out.println(res + "------------------------------------------------------------");
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        try{
-            format.parse(res);
+        try {
+            assertNotNull(format.parse(res));   // if res is incorrect, return NULL
         } catch (ParseException e) {
-            assertEquals(1, 0);     // if format is not correct, here will occur a fail case
+            e.printStackTrace();
         }
     }
 
