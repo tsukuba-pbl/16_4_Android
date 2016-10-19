@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
@@ -91,10 +94,10 @@ public class QRCodeReaderActivityTest {
     }
 
     /*
-    *  confirm target file contains correct datetime
+    *  confirm target file contains correct datetime BY regular expression
     * */
     @Test
-    public void ContainDateInJson() throws IOException {
+    public void ContainDateByRegExp() throws IOException {
         try{
             jsonObject = new JSONObject(correct_json_msg);
         }catch  (JSONException e){}
@@ -109,6 +112,25 @@ public class QRCodeReaderActivityTest {
         Boolean result2 = Pattern.matches(reg4, qh.Read().substring(28,35));    // HH:mm:ss (exclude '\n')
         assertEquals(result1, true);
         assertEquals(result2, true);
+    }
+
+    /*
+    *  confirm target file contains correct datetime BY dateformat
+    * */
+    @Test
+    public void ContainDateByDateFormat() throws IOException {
+        try{
+            jsonObject = new JSONObject(correct_json_msg);
+        }catch  (JSONException e){}
+        qh.Save(jsonObject);
+        String res = qh.Read().substring(17, 36);
+        System.out.println(res + "------------------------------------------------------------");
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        try{
+            format.parse(res);
+        } catch (ParseException e) {
+            assertEquals(1, 0);     // if format is not correct, here will occur a fail case
+        }
     }
 
     /*
