@@ -2,4 +2,6 @@
     <string name="app_name">QRCodeReader</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_qrcode_reader">QRCodeReaderActivity</string>
+
+    <string name="fuck">fuck</string>
 </resources>
