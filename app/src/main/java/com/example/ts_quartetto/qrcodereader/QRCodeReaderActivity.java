@@ -23,6 +23,7 @@ public class QRCodeReaderActivity extends AppCompatActivity {
     public QRHandler qrHandler = new QRHandler();
 
     public Config config = new Config();
+    private Utility utility = new Utility();
 
    // private  CompoundBarcodeView mBarcodeView;
     @Override
@@ -39,32 +40,26 @@ public class QRCodeReaderActivity extends AppCompatActivity {
     //スキャンした時の結果の処理
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(config.isDebug()) {
-            Log.d("onActivityResult", "onActivityResult Start");
-            Log.d("requestCode", "requestCode: " + requestCode + " resultCode: " + resultCode + " data: " + data);
-        }
+        utility.WriteDebugLog("onActivityResult", "onActivityResult Start");
+        utility.WriteDebugLog("requestCode", "requestCode: " + requestCode + " resultCode: " + resultCode + " data: " + data);
+
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         // null の場合
         if (intentResult == null) {
-            if(config.isDebug()) {
-                Log.d("TAG", "Weird");
-            }
+            utility.WriteDebugLog("TAG", "Weird");
+
             super.onActivityResult(requestCode, resultCode, data);
             return;
         }
 
         if (intentResult.getContents() == null) {
             // 戻るボタンをタップした場合
-            if(config.isDebug()) {
-                Log.d("TAG", "Cancelled Scan");
-            }
+            utility.WriteDebugLog("TAG", "Cancelled Scan");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         } else {
             // カメラで読み取った情報をラベルに表示
-            if(config.isDebug()) {
-                Log.d("TAG", "Scanned! " + intentResult.getContents());
-            }
+                utility.WriteDebugLog("TAG", "Scanned! " + intentResult.getContents());
             try {
                 file_content_json = new JSONObject(new String(intentResult.getContents()));
 

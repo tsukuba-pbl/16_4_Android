@@ -3,6 +3,7 @@ package com.example.ts_quartetto.qrcodereader;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
  * Created by we on 2016/10/5.
  */
 public class Utility {
+    private  Config config = new Config();
 
     public void HttpPost(String filepath, String filename, String addr)
     {
@@ -49,6 +51,12 @@ public class Utility {
     {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd_HHmm_ss");
         return sDateFormat.format(new java.util.Date());
+    }
+
+    public void WriteDebugLog(String s1, String s2)
+    {
+        if(config.isDebug())
+            Log.d(s1, s2);
     }
 
 }
