@@ -91,6 +91,7 @@ public class QRCodeReaderActivityTest {
      //   assertEquals(" ", qh.Read());        // fail
      //   assertEquals("asdf", qh.Read());     // fail
         assertEquals("", qh.Read());
+
     }
 
     /*

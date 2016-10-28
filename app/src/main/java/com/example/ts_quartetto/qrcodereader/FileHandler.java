@@ -29,7 +29,7 @@ public class FileHandler {
                 fos.write('\n');
                 fos.flush();
                 fos.close();
-        } catch (Exception e) { System.out.println("e: " + e);}
+        } catch (Exception e) { e.printStackTrace();}
     }
 
     public String ReadFromSD(String path) throws IOException {
