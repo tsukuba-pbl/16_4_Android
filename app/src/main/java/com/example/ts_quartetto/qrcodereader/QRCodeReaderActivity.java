@@ -118,18 +118,28 @@ public class QRCodeReaderActivity extends AppCompatActivity {
             }
             else
             {
-                //取得したデータをファイルに書き込む
-                qrHandler.Save(file_content_json);
+                String title = new String("投票が");
+                String msg = new String();
+                String btn = new String("終了");
+                if(qrHandler.Check(file_content_json))
+                {
+                    //取得したデータをファイルに書き込む
+                    qrHandler.Save(file_content_json);
+                    msg = "成功しました!";
+                }
+                else
+                {
+                    msg = "失敗しまいました...";
+                }
+
                 //QRコード読み取り終了したら、1秒ぐらい提示メッセージを表示する
                 dia = new AlertDialog.Builder(QRCodeReaderActivity.this)
-                    .setTitle("QRコードリーダー")
-                    .setMessage("読み取りました！")
-                    .setNegativeButton("終了", new DialogInterface.OnClickListener()
+                    .setTitle(title)
+                    .setMessage(msg)
+                    .setNegativeButton(btn, new DialogInterface.OnClickListener()
                     {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
+                        public void onClick(DialogInterface dialog, int which) {}
                     })
                     .show();
 
