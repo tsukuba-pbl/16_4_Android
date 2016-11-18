@@ -118,18 +118,18 @@ public class QRCodeReaderActivity extends AppCompatActivity {
             }
             else
             {
-                String title = new String("投票が");
+                String title = new String("投票");
                 String msg = new String();
-                String btn = new String("終了");
+                String btn = new String("　");
                 if(qrHandler.Check(file_content_json))
                 {
                     //取得したデータをファイルに書き込む
                     qrHandler.Save(file_content_json);
-                    msg = "成功しました!";
+                    msg = "投票が完了しました";
                 }
                 else
                 {
-                    msg = "失敗しまいました...";
+                    msg = "投票が失敗しました。再度投票してください";
                 }
 
                 //QRコード読み取り終了したら、1秒ぐらい提示メッセージを表示する
