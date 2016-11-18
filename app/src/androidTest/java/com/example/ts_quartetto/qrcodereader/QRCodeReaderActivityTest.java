@@ -137,4 +137,24 @@ public class QRCodeReaderActivityTest {
         fh.WriteToSD(mytestpath, data);
         assertEquals(data+"\n", fh.ReadFromSD(mytestpath));
     }
+
+    /*
+    *   JSONファイル各Key値が正しいかどうかをチェックする
+    * */
+    @Test
+    public void CheckJsonFormat() throws JSONException {
+        //　Key値不十分です、name_2とname_3がない
+        JSONObject j1 = new JSONObject("{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\"}");
+        //　Key値間違い、idとnameは認識できません
+        JSONObject j2 = new JSONObject("{\"id\":\"test\",\"name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}");
+        //　認識できないKey値がある、name_4
+        JSONObject j3 = new JSONObject("{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\", \"name_4\":\"444\"}");
+        //　正しいKey値を含めたJSONメッセージです
+        JSONObject j_ok = new JSONObject(correct_json_msg);
+
+        assertEquals(qh.Check(j1), false);
+        assertEquals(qh.Check(j2), false);
+        assertEquals(qh.Check(j3), false);
+        assertEquals(qh.Check(j_ok), true);
+    }
 }
