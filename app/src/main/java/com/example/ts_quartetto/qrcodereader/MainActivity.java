@@ -49,7 +49,7 @@ import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
     private String server_file_name = new String("file");
-    private String server_addr = new String("http://vm05.sit.cs.tsukuba.ac.jp/16-4_Aggregate/public/receive_file.php");
+    private String server_addr = new String("http://vm05.sit.cs.tsukuba.ac.jp/PosTom/downloads/upload");
     private QRHandler qrHandler = new QRHandler();
     private Utility utility = new Utility();
     private String mac;
