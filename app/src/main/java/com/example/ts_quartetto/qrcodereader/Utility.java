@@ -1,6 +1,8 @@
 package com.example.ts_quartetto.qrcodereader;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
@@ -23,7 +25,8 @@ import java.text.SimpleDateFormat;
  * Created by we on 2016/10/5.
  */
 public class Utility {
-    private  Config config = new Config();
+    private Config config = new Config();
+    private AlertDialog dia;
 
     public void HttpPost(String filepath, String filename, String addr)
     {

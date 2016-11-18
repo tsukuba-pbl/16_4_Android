@@ -21,6 +21,7 @@ import java.util.Date;
  * Created by we on 2016/10/5.
  */
 public class QRHandler extends FileHandler {
+    private String[] myjson = {"voter_id", "voter_name", "name_1", "name_2", "name_3"};
     private String basepath = "/storage/emulated/0/";
     private String filepath = "/storage/emulated/0/target.csv";   // SDcard path
     private Utility utility = new Utility();
@@ -48,6 +49,18 @@ public class QRHandler extends FileHandler {
         out.transferFrom( in, 0, in.size() );
 
         return newFileName;
+    }
+
+    public Boolean Check(JSONObject json_obj)
+    {
+        if(myjson.length != json_obj.length())
+            return false;
+
+        for(int i = 0; i < myjson.length; i++)
+            if(!json_obj.has(myjson[i]))
+                return false;
+
+        return true;
     }
 
     public void Save(JSONObject json_obj) {

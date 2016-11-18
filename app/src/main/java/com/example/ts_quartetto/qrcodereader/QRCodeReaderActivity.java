@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ public class QRCodeReaderActivity extends AppCompatActivity {
 
     public Config config = new Config();
     private Utility utility = new Utility();
+
+    AlertDialog dia;
 
    // private  CompoundBarcodeView mBarcodeView;
     @Override
@@ -115,9 +118,41 @@ public class QRCodeReaderActivity extends AppCompatActivity {
             }
             else
             {
-                qrHandler.Save(file_content_json);
-                Intent intent = new Intent(getApplicationContext(), QRCodeReaderActivity.class);
-                startActivity(intent);
+                String title = new String("投票");
+                String msg = new String();
+                String btn = new String("　");
+                if(qrHandler.Check(file_content_json))
+                {
+                    //取得したデータをファイルに書き込む
+                    qrHandler.Save(file_content_json);
+                    msg = "投票が完了しました";
+                }
+                else
+                {
+                    msg = "投票が失敗しました。再度投票してください";
+                }
+
+                //QRコード読み取り終了したら、1秒ぐらい提示メッセージを表示する
+                dia = new AlertDialog.Builder(QRCodeReaderActivity.this)
+                    .setTitle(title)
+                    .setMessage(msg)
+                    .setNegativeButton(btn, new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {}
+                    })
+                    .show();
+
+                //1秒後で、上の提示メッセージを隠す
+                new Handler().postDelayed(new Runnable()
+                {
+                    public void run()
+                    {
+                        dia.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), QRCodeReaderActivity.class);
+                        startActivity(intent);
+                    }
+                }, 1000);
             }
         }
     }
