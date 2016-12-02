@@ -41,8 +41,8 @@ public class QRHandler extends FileHandler {
     *   copy file from filepath and rename as MacAddr_CurrentDate.csv
     *   filepath will not be deleted
     * */
-    public String ChangeFilePath(String eventid, String mac) throws IOException {
-        String newFileName = GetBasePath() + mac + "_" + utility.GetFileDate() + ".csv";
+    public String ChangeFilePath(String name) throws IOException {
+        String newFileName = GetBasePath() + name + "_" + utility.GetFileDate() + ".csv";
 
         File from = new File(filepath);
         File to = new File(newFileName);

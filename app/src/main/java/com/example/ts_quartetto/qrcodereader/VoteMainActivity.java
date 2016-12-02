@@ -66,7 +66,7 @@ public class VoteMainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            utility.HttpPost(qrHandler.ChangeFilePath(qrHandler.eventid, mac), server_file_name, server_addr);
+                            utility.HttpPost(qrHandler.ChangeFilePath(qrHandler.eventid + "_" + mac), server_file_name, server_addr);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
