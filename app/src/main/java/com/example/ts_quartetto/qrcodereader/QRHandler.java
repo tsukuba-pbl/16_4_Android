@@ -61,7 +61,7 @@ public class QRHandler extends FileHandler {
 
     public Boolean CheckEventQRCode(JSONObject obj)
     {
-        if(obj.has("event_id"))
+        if(obj.has("event_id") && obj.has("event_name"))
             return true;
         return false;
     }
