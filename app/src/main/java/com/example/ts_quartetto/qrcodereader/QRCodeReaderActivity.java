@@ -121,6 +121,7 @@ public class QRCodeReaderActivity extends AppCompatActivity {
                 String title = new String("投票");
                 String msg = new String();
                 String btn = new String("　");
+                int displayTime = 1000;
                 if(qrHandler.Check(file_content_json))
                 {
                     //取得したデータをファイルに書き込む
@@ -129,7 +130,9 @@ public class QRCodeReaderActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    msg = "投票が失敗しました。再度投票してください";
+                    // 失敗場合、ユーザーに見やすいために、表示時間を2倍に増加
+                    displayTime *= 2;
+                    msg = "無効なQRコードなので、投票が失敗しました。再度投票してください";
                 }
 
                 //QRコード読み取り終了したら、1秒ぐらい提示メッセージを表示する
@@ -152,7 +155,7 @@ public class QRCodeReaderActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), QRCodeReaderActivity.class);
                         startActivity(intent);
                     }
-                }, 1000);
+                }, displayTime);
             }
         }
     }
