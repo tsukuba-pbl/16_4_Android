@@ -1,106 +1,27 @@
 package com.example.ts_quartetto.qrcodereader;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
-    private String server_file_name = new String("file");
-    private String server_addr = new String("http://vm05.sit.cs.tsukuba.ac.jp/PosTom/downloads/upload");
-    private QRHandler qrHandler = new QRHandler();
-    private Utility utility = new Utility();
-    private String mac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wInfo = wifiManager.getConnectionInfo();
-        mac = wInfo.getMacAddress();
-        mac = mac.replaceAll("[^0-9a-zA-Z]","");
-
-        //create QRCodeReader button
-        //ボタン押されたらQRコードリーダの表示
-        Button ReaderButton = (Button) findViewById(R.id.button);
+        // イベントQRを読み込む
+        Button ReaderButton = (Button) findViewById(R.id.btn_read_event_name);
         ReaderButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), QRCodeReaderActivity.class);
+                Intent intent = new Intent(getApplicationContext(), QRCode_ReadEventInfo.class);
                 startActivity(intent);
-            }
-        });
-
-        //ファイルの中身を削除するボタン
-        Button ClearButton = (Button) findViewById(R.id.button_fileclear);
-        ClearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    //ファイルの中身削除
-                    qrHandler.Clear();
-                }catch(Exception e){}
-            }
-        });
-
-        Button SubmitButton = (Button) findViewById(R.id.button_submit);
-        SubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                (new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            utility.HttpPost(qrHandler.ChangeFilePath(mac), server_file_name, server_addr);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                })).start();
             }
         });
 

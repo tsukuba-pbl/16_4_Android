@@ -12,32 +12,24 @@
     tools:context="com.example.tsuruda_tomohiro.qrcodereader.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
+    <TextView
+        android:text=
+            "PosTomのDashboardにあるイベントQRコードを読み取ってください"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QRCodeReader"
-        android:id="@+id/button"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="183dp" />
+        android:layout_marginTop="140dp"
+        android:id="@+id/text_comment" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ファイルクリア"
-        android:id="@+id/button_fileclear"
-        android:layout_below="@+id/button"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button"
-        android:layout_marginTop="55dp" />
+        android:text="イベントQRを読み込む"
+        android:id="@+id/btn_read_event_name"
+        android:layout_marginTop="313dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="投票終了"
-        android:id="@+id/button_submit"
-        android:layout_below="@+id/button_fileclear"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp" />
 
 </RelativeLayout>

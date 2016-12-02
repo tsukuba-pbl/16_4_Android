@@ -6,12 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -152,9 +150,9 @@ public class QRCodeReaderActivityTest {
         //　正しいKey値を含めたJSONメッセージです
         JSONObject j_ok = new JSONObject(correct_json_msg);
 
-        assertEquals(qh.Check(j1), false);
-        assertEquals(qh.Check(j2), false);
-        assertEquals(qh.Check(j3), false);
-        assertEquals(qh.Check(j_ok), true);
+        assertEquals(qh.CheckVoteQRCode(j1), false);
+        assertEquals(qh.CheckVoteQRCode(j2), false);
+        assertEquals(qh.CheckVoteQRCode(j3), false);
+        assertEquals(qh.CheckVoteQRCode(j_ok), true);
     }
 }

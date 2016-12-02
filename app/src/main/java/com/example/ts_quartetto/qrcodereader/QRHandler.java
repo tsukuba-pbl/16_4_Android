@@ -21,7 +21,10 @@ import java.util.Date;
  * Created by we on 2016/10/5.
  */
 public class QRHandler extends FileHandler {
-    private String[] myjson = {"voter_id", "voter_name", "name_1", "name_2", "name_3"};
+    static public String eventid = "";
+    static public String eventname = "";
+
+    private String[] myjson = {"event_id", "voter_id", "voter_name", "name_1", "name_2", "name_3"};
     private String basepath = "/storage/emulated/0/";
     private String filepath = "/storage/emulated/0/target.csv";   // SDcard path
     private Utility utility = new Utility();
@@ -38,7 +41,7 @@ public class QRHandler extends FileHandler {
     *   copy file from filepath and rename as MacAddr_CurrentDate.csv
     *   filepath will not be deleted
     * */
-    public String ChangeFilePath(String mac) throws IOException {
+    public String ChangeFilePath(String eventid, String mac) throws IOException {
         String newFileName = GetBasePath() + mac + "_" + utility.GetFileDate() + ".csv";
 
         File from = new File(filepath);
@@ -51,7 +54,19 @@ public class QRHandler extends FileHandler {
         return newFileName;
     }
 
-    public Boolean Check(JSONObject json_obj)
+    public Boolean CheckEventId(String id)
+    {
+        return eventid.equals(id);
+    }
+
+    public Boolean CheckEventQRCode(JSONObject obj)
+    {
+        if(obj.has("event_id"))
+            return true;
+        return false;
+    }
+
+    public Boolean CheckVoteQRCode(JSONObject json_obj)
     {
         if(myjson.length != json_obj.length())
             return false;
@@ -68,7 +83,7 @@ public class QRHandler extends FileHandler {
             WriteToSD(
                     GetFilePath(),
                     json_obj.getString("voter_id") + "," + json_obj.getString("name_1") + "," + json_obj.getString("name_2") + "," + json_obj.getString("name_3") + "," +
-                        utility.GetVoteDate());
+                            utility.GetVoteDate());
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
