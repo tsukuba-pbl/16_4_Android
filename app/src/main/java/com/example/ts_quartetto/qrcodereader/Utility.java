@@ -58,7 +58,7 @@ public class Utility {
 
     public String GetUNIXTime()
     {
-        String ret = String.valueOf(System.currentTimeMillis());
+        String ret = String.valueOf(System.currentTimeMillis()/1000);   //  Mill/1000- > seconds
         return ret;
     }
 
