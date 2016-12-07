@@ -38,13 +38,26 @@
         android:layout_marginBottom="77dp" />
 
     <TextView
-        android:text="Event"
+        android:text="Event_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="81dp"
-        android:id="@+id/text_event_info"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="150dp"
+        android:textSize="100px"
+        android:id="@+id/text_event_name"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Event_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_event_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:textSize="40px"
+        android:id="@+id/text_event_id" />
 
     <Button
         android:text="イベント終了"
@@ -54,6 +67,8 @@
         android:layout_marginBottom="154dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+
 
 
 </RelativeLayout>
