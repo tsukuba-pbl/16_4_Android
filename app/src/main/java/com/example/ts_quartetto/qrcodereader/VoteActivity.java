@@ -42,7 +42,7 @@ public class VoteActivity extends AppCompatActivity {
             }
         });
 
-        //投票終了、投票結果とイベント名をクリアする
+        //ファイルクリア、投票ファイルをクリアする
         Button ClearButton = (Button) findViewById(R.id.btn_clear_file);
         ClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +50,6 @@ public class VoteActivity extends AppCompatActivity {
                 try {
                     //ファイルの中身削除
                     qrHandler.Clear();
-                    qrHandler.eventname = "";
-                    qrHandler.eventid = "";
                 }catch(Exception e){}
             }
         });
@@ -71,11 +69,14 @@ public class VoteActivity extends AppCompatActivity {
             }
         });
 
-        //投票終了、投票結果とイベント名をクリアする
+        //イベント終了、投票ファイルとイベント名IDをクリアする
         Button FinishButton = (Button) findViewById(R.id.btn_vote_finish);
         FinishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                qrHandler.Clear();
+                qrHandler.eventname = "";
+                qrHandler.eventid = "";
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
