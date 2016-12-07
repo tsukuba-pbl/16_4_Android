@@ -28,10 +28,10 @@ public class VoteActivity extends AppCompatActivity {
         mac = wInfo.getMacAddress();
         mac = mac.replaceAll("[^0-9a-zA-Z]","");
 
-        TextView eventName  = (TextView)findViewById(R.id.text_event_name);
+        TextView eventName = (TextView)findViewById(R.id.text_event_name);
         eventName.setText(qrHandler.eventname);
-        TextView eventId   = (TextView)findViewById(R.id.text_event_id);
-        eventId .setText(qrHandler.eventid);
+        TextView eventId = (TextView)findViewById(R.id.text_event_id);
+        eventId.setText(qrHandler.eventid);
 
         //create QRCodeReader button
         //ボタン押されたらQRコードリーダの表示
