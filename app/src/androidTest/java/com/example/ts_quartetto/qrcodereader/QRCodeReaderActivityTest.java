@@ -6,12 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -21,12 +19,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class QRCodeReaderActivityTest {
     private JSONObject jsonObject;
-    QRHandler qh = new QRHandler();
+    HandlerQRCode qh = new HandlerQRCode();
     private String json_msg =  "{\"ID\":\"test\",\"Name\":\"テスト\",\"Name_1\":\"222\",\"Name_2\":\"999\",\"Name_3\":\"333\"}";
     private String correct_json_msg = "{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
 
     private String mytestpath = "/storage/emulated/0/test.csv";   // SDcard path
-    FileHandler fh = new FileHandler();
+    HandlerFile fh = new HandlerFile();
 
     @Before
     public void setUp() throws Exception {
@@ -152,9 +150,9 @@ public class QRCodeReaderActivityTest {
         //　正しいKey値を含めたJSONメッセージです
         JSONObject j_ok = new JSONObject(correct_json_msg);
 
-        assertEquals(qh.Check(j1), false);
-        assertEquals(qh.Check(j2), false);
-        assertEquals(qh.Check(j3), false);
-        assertEquals(qh.Check(j_ok), true);
+        assertEquals(qh.CheckVoteQRCode(j1), false);
+        assertEquals(qh.CheckVoteQRCode(j2), false);
+        assertEquals(qh.CheckVoteQRCode(j3), false);
+        assertEquals(qh.CheckVoteQRCode(j_ok), true);
     }
 }
