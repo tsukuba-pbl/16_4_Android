@@ -56,6 +56,12 @@ public class Utility {
         return sDateFormat.format(new java.util.Date());
     }
 
+    public String GetUNIXTime()
+    {
+        String ret = String.valueOf(System.currentTimeMillis());
+        return ret;
+    }
+
     public void WriteDebugLog(String s1, String s2)
     {
         if(config.isDebug())

@@ -12,13 +12,11 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class QRCode_ReadEventInfo extends AppCompatActivity {
+public class MainActivityReadEventQRCode extends AppCompatActivity {
     private Boolean isJSONFile = false;
     public JSONObject event_json;
 
-    public QRHandler qrHandler = new QRHandler();
-
-    public Config config = new Config();
+    public HandlerQRCode qrHandler = new HandlerQRCode();
     private Utility utility = new Utility();
 
     AlertDialog dia;
@@ -71,15 +69,15 @@ public class QRCode_ReadEventInfo extends AppCompatActivity {
             }catch (JSONException e){e.printStackTrace();}
 
             if(!isJSONFile) {
-                Toast.makeText(QRCode_ReadEventInfo.this, "Not a standard JSON file !!!, Pls try again ~~", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivityReadEventQRCode.this, "Not a standard JSON file !!!, Pls try again ~~", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // QRにイベント名がないので、読み取る再開
             if(!qrHandler.CheckEventQRCode(event_json))
             {
-                Toast.makeText(QRCode_ReadEventInfo.this, "Not found event_name !!!, Pls check your QR code ~~", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), QRCode_ReadEventInfo.class);
+                Toast.makeText(MainActivityReadEventQRCode.this, "Not found event_name !!!, Pls check your QR code ~~", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MainActivityReadEventQRCode.class);
                 startActivity(intent);
             }
 
@@ -87,7 +85,7 @@ public class QRCode_ReadEventInfo extends AppCompatActivity {
             try {
                 qrHandler.eventid = event_json.getString("event_id");
                 qrHandler.eventname = event_json.getString("event_name");
-                Intent intent = new Intent(getApplicationContext(), VoteMainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
                 startActivity(intent);
             } catch (JSONException e) {
                 e.printStackTrace();

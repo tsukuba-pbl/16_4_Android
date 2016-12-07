@@ -26,11 +26,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".QRCode_ReadVoteInfo"
+            android:name=".VoteActivityReadVoteQRCode"
             android:label="@string/title_activity_qrcode_reader"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".QRCode_ReadEventInfo" />
-        <activity android:name=".VoteMainActivity"></activity>
+        <activity android:name=".MainActivityReadEventQRCode" />
+        <activity android:name=".VoteActivity"></activity>
     </application>
 
 </manifest>

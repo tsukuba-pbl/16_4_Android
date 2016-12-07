@@ -20,14 +20,11 @@ public class MainActivity extends AppCompatActivity {
         ReaderButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), QRCode_ReadEventInfo.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivityReadEventQRCode.class);
                 startActivity(intent);
             }
         });
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-   //     client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override

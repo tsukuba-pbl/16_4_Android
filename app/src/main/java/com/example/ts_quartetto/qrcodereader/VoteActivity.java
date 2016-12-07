@@ -12,14 +12,12 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
-public class VoteMainActivity extends AppCompatActivity {
+public class VoteActivity extends AppCompatActivity {
     private String server_file_name = new String("file");
-    private String server_addr = new String("http://vm05.sit.cs.tsukuba.ac.jp/PosTom/downloads/upload");
-    private QRHandler qrHandler = new QRHandler();
+    private String server_addr = new String("http://vm05.sit.cs.tsukuba.ac.jp/PosTom/votes/upload");
+    private HandlerQRCode qrHandler = new HandlerQRCode();
     private Utility utility = new Utility();
     private String mac;
-
-    Button b_voteStart, b_clearFile, b_uploadResult, b_voteFinish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,7 @@ public class VoteMainActivity extends AppCompatActivity {
         ReaderButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), QRCode_ReadVoteInfo.class);
+                Intent intent = new Intent(getApplicationContext(), VoteActivityReadVoteQRCode.class);
                 startActivity(intent);
             }
         });
@@ -67,9 +65,7 @@ public class VoteMainActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             utility.HttpPost(qrHandler.ChangeFilePath(qrHandler.eventid + "_" + mac), server_file_name, server_addr);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        } catch (IOException e) {e.printStackTrace();}
                     }
                 })).start();
             }
@@ -84,10 +80,5 @@ public class VoteMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
-
-
-
-
 }

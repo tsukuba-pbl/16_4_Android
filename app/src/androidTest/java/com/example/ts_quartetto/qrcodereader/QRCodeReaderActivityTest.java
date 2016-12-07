@@ -19,12 +19,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class QRCodeReaderActivityTest {
     private JSONObject jsonObject;
-    QRHandler qh = new QRHandler();
+    HandlerQRCode qh = new HandlerQRCode();
     private String json_msg =  "{\"ID\":\"test\",\"Name\":\"テスト\",\"Name_1\":\"222\",\"Name_2\":\"999\",\"Name_3\":\"333\"}";
     private String correct_json_msg = "{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
 
     private String mytestpath = "/storage/emulated/0/test.csv";   // SDcard path
-    FileHandler fh = new FileHandler();
+    HandlerFile fh = new HandlerFile();
 
     @Before
     public void setUp() throws Exception {

@@ -16,11 +16,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class QRCode_ReadVoteInfo extends AppCompatActivity {
+public class VoteActivityReadVoteQRCode extends AppCompatActivity {
     private Boolean isJSONFile = false;
     public JSONObject file_content_json;
 
-    public QRHandler qrHandler = new QRHandler();
+    public HandlerQRCode qrHandler = new HandlerQRCode();
 
     public Config config = new Config();
     private Utility utility = new Utility();
@@ -51,7 +51,6 @@ public class QRCode_ReadVoteInfo extends AppCompatActivity {
         // null の場合
         if (intentResult == null) {
             utility.WriteDebugLog("TAG", "Weird");
-
             super.onActivityResult(requestCode, resultCode, data);
             return;
         }
@@ -59,7 +58,7 @@ public class QRCode_ReadVoteInfo extends AppCompatActivity {
         if (intentResult.getContents() == null) {
             // 戻るボタンをタップした場合
             utility.WriteDebugLog("TAG", "Cancelled Scan");
-            Intent intent = new Intent(getApplicationContext(), VoteMainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
             startActivity(intent);
         } else {
             // カメラで読み取った情報をラベルに表示
@@ -76,21 +75,19 @@ public class QRCode_ReadVoteInfo extends AppCompatActivity {
             }catch (JSONException e){e.printStackTrace();}
 
             if(!isJSONFile) {
-                Toast.makeText(QRCode_ReadVoteInfo.this, "Not a standard JSON file !!!, Pls try again ~~", Toast.LENGTH_SHORT).show();
+                Toast.makeText(VoteActivityReadVoteQRCode.this, "Not a standard JSON file !!!, Pls try again ~~", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             try {
                 VoteEventId = file_content_json.getString("event_id");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            } catch (JSONException e) {e.printStackTrace();}
 
             // QRコードを読み取った場合アラートダイアログを表示する。
             if(config.isDebug())
             {
                 try {
-                    new AlertDialog.Builder(QRCode_ReadVoteInfo.this)
+                    new AlertDialog.Builder(VoteActivityReadVoteQRCode.this)
                             .setTitle("QRコードリーダー")
                             .setMessage("読み取ったデータ: " + intentResult.getContents() + "\n" + "書き込む前のファイルの中身\n" + qrHandler.Read())
                             .setNegativeButton("終了", new DialogInterface.OnClickListener()
@@ -102,7 +99,7 @@ public class QRCode_ReadVoteInfo extends AppCompatActivity {
 
                                     // ファイルに書き込んだ内容をアラートダイアログを表示する。
                                     try {
-                                        new AlertDialog.Builder(QRCode_ReadVoteInfo.this)
+                                        new AlertDialog.Builder(VoteActivityReadVoteQRCode.this)
                                                 .setTitle("ファイルに書き込み後")
                                                 .setMessage( "書き込み後のファイルの中身\n" + qrHandler.Read())
                                                 .setNegativeButton("終了", new DialogInterface.OnClickListener()
@@ -111,7 +108,7 @@ public class QRCode_ReadVoteInfo extends AppCompatActivity {
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         // "Cancel"ボタンが押されたらアラートダイアログを閉じる。
                                                         dialog.dismiss();
-                                                        Intent intent = new Intent(getApplicationContext(), QRCode_ReadVoteInfo.class);
+                                                        Intent intent = new Intent(getApplicationContext(), VoteActivityReadVoteQRCode.class);
                                                         startActivity(intent);
                                                     }
                                                 })
@@ -146,7 +143,7 @@ public class QRCode_ReadVoteInfo extends AppCompatActivity {
                 }
 
                 //QRコード読み取り終了したら、1秒ぐらい提示メッセージを表示する
-                dia = new AlertDialog.Builder(QRCode_ReadVoteInfo.this)
+                dia = new AlertDialog.Builder(VoteActivityReadVoteQRCode.this)
                     .setTitle(title)
                     .setMessage(msg)
                     .setNegativeButton(btn, new DialogInterface.OnClickListener()
@@ -162,7 +159,7 @@ public class QRCode_ReadVoteInfo extends AppCompatActivity {
                     public void run()
                     {
                         dia.dismiss();
-                        Intent intent = new Intent(getApplicationContext(), QRCode_ReadVoteInfo.class);
+                        Intent intent = new Intent(getApplicationContext(), VoteActivityReadVoteQRCode.class);
                         startActivity(intent);
                     }
                 }, displayTime);
