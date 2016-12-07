@@ -76,7 +76,7 @@ public class VoteActivityReadVoteQRCode extends AppCompatActivity {
 
             if(!isJSONFile) {
                 String title = new String("投票");
-                String msg = new String("JSONファイルではないので、投票が失敗しました。QRコードを確認してください");
+                String msg = new String("データ形式が異なるため、投票が失敗しました。");
                 String btn = new String("　");
                 int displayTime = 2000;
 
@@ -154,11 +154,11 @@ public class VoteActivityReadVoteQRCode extends AppCompatActivity {
 
                 if(!qrHandler.CheckVoteQRCode(file_content_json))
                 {
-                    msg = "無効なQRコードなので、投票が失敗しました。再度投票してください";
+                    msg = "無効なQRコードのため、投票が失敗しました。";
                 }
                 else if(!qrHandler.CheckEventId(VoteEventId))
                 {
-                    msg = "別のイベントのQRコードなので、投票が失敗しました。QRコードを確認してください";
+                    msg = "別のイベントのQRコードのため、投票が失敗しました。";
                 }
                 else
                 {

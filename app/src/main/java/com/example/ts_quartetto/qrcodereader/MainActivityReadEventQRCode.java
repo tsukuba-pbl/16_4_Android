@@ -78,9 +78,9 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
                 int displayTime = 2000;
 
                 if(!isJSONFile)
-                    msg = new String("JSONファイルではないので、投票画面へ移動できません。QRコードを確認してください");
+                    msg = new String("データ形式が違います。QRコードを確認してください");
                 else
-                    msg = new String("イベントIDを見つけないので、投票画面へ移動できません。QRコードを確認してください");
+                    msg = new String("イベント用のQRコードではありません。QRコードを確認してください");
                 //QRコード読み取り終了したら、1秒ぐらい提示メッセージを表示する
                 dia = new AlertDialog.Builder(MainActivityReadEventQRCode.this)
                         .setTitle(title)
