@@ -13,13 +13,15 @@
     tools:showIn="@layout/activity_main">
 
     <TextView
-        android:text=
-            "PosTomのDashboardにあるイベントQRコードを読み取ってください"
+        android:text="PosTomのDashboard\nにある\nイベントQRコードを\n読み取ってください"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginRight="140dp"
+        android:textSize="70px"
         android:id="@+id/text_comment" />
 
     <Button
@@ -30,6 +32,7 @@
         android:layout_marginTop="313dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
 
 
 </RelativeLayout>
