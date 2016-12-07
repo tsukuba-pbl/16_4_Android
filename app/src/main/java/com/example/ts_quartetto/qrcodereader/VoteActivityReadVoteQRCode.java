@@ -75,7 +75,32 @@ public class VoteActivityReadVoteQRCode extends AppCompatActivity {
             }catch (JSONException e){e.printStackTrace();}
 
             if(!isJSONFile) {
-                Toast.makeText(VoteActivityReadVoteQRCode.this, "Not a standard JSON file !!!, Pls try again ~~", Toast.LENGTH_SHORT).show();
+                String title = new String("投票");
+                String msg = new String("JSONファイルではないので、投票が失敗しました。QRコードを確認してください");
+                String btn = new String("　");
+                int displayTime = 2000;
+
+                //QRコード読み取り終了したら、1秒ぐらい提示メッセージを表示する
+                dia = new AlertDialog.Builder(VoteActivityReadVoteQRCode.this)
+                        .setTitle(title)
+                        .setMessage(msg)
+                        .setNegativeButton(btn, new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {}
+                        })
+                        .show();
+
+                //2秒後で、上の提示メッセージを隠す
+                new Handler().postDelayed(new Runnable()
+                {
+                    public void run()
+                    {
+                        dia.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), VoteActivityReadVoteQRCode.class);
+                        startActivity(intent);
+                    }
+                }, displayTime);
                 return;
             }
 
@@ -126,13 +151,14 @@ public class VoteActivityReadVoteQRCode extends AppCompatActivity {
                 String msg = new String();
                 String btn = new String("　");
                 int displayTime = 2000;
-                if(!qrHandler.CheckEventId(VoteEventId))
-                {
-                    msg = "別のイベントのQRコードなので、投票が失敗しました。QRコードを確認してください";
-                }
-                else if(!qrHandler.CheckVoteQRCode(file_content_json))
+
+                if(!qrHandler.CheckVoteQRCode(file_content_json))
                 {
                     msg = "無効なQRコードなので、投票が失敗しました。再度投票してください";
+                }
+                else if(!qrHandler.CheckEventId(VoteEventId))
+                {
+                    msg = "別のイベントのQRコードなので、投票が失敗しました。QRコードを確認してください";
                 }
                 else
                 {

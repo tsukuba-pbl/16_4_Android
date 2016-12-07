@@ -1,7 +1,9 @@
 package com.example.ts_quartetto.qrcodereader;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -68,17 +70,39 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
                 isJSONFile = true;
             }catch (JSONException e){e.printStackTrace();}
 
-            if(!isJSONFile) {
-                Toast.makeText(MainActivityReadEventQRCode.this, "Not a standard JSON file !!!, Pls try again ~~", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // QRにイベント名がないので、読み取る再開
-            if(!qrHandler.CheckEventQRCode(event_json))
+            if(!isJSONFile || !qrHandler.CheckEventQRCode(event_json))
             {
-                Toast.makeText(MainActivityReadEventQRCode.this, "Not found event_name !!!, Pls check your QR code ~~", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), MainActivityReadEventQRCode.class);
-                startActivity(intent);
+                String title = new String("投票");
+                String msg = new String();
+                String btn = new String("　");
+                int displayTime = 2000;
+
+                if(!isJSONFile)
+                    msg = new String("JSONファイルではないので、投票画面へ移動できません。QRコードを確認してください");
+                else
+                    msg = new String("イベントIDを見つけないので、投票画面へ移動できません。QRコードを確認してください");
+                //QRコード読み取り終了したら、1秒ぐらい提示メッセージを表示する
+                dia = new AlertDialog.Builder(MainActivityReadEventQRCode.this)
+                        .setTitle(title)
+                        .setMessage(msg)
+                        .setNegativeButton(btn, new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {}
+                        })
+                        .show();
+
+                //2秒後で、上の提示メッセージを隠す
+                new Handler().postDelayed(new Runnable()
+                {
+                    public void run()
+                    {
+                        dia.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), MainActivityReadEventQRCode.class);
+                        startActivity(intent);
+                    }
+                }, displayTime);
+                return;
             }
 
             // イベント名を抽出し保存してから、投票画面に行く
