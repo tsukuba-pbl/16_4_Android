@@ -16,7 +16,8 @@ public class HandlerQRCode extends HandlerFile {
     static public String eventid = "";
     static public String eventname = "";
 
-    private String[] myjson = {"event_id", "voter_id", "voter_name", "name_1", "name_2", "name_3"};
+    private String[] jsonEventFormat = {"event_id", "event_name"};
+    private String[] jsonVoteFormat = {"event_id", "voter_id", "voter_name", "name_1", "name_2", "name_3"};
     private String basepath = "/storage/emulated/0/";
     private String filepath = "/storage/emulated/0/target.csv";   // SDcard path
     private Utility utility = new Utility();
@@ -51,17 +52,20 @@ public class HandlerQRCode extends HandlerFile {
 
     public Boolean CheckEventQRCode(JSONObject obj)
     {
-        if(obj.has("event_id") && obj.has("event_name"))
-            return true;
-        return false;
+        if(jsonEventFormat.length != obj.length())
+            return false;
+        for(int i = 0; i < jsonEventFormat.length; i++)
+            if(!obj.has(jsonEventFormat[i]))
+                return false;
+        return true;
     }
 
-    public Boolean CheckVoteQRCode(JSONObject json_obj)
+    public Boolean CheckVoteQRCode(JSONObject obj)
     {
-        if(myjson.length != json_obj.length())
+        if(jsonVoteFormat.length != obj.length())
             return false;
-        for(int i = 0; i < myjson.length; i++)
-            if(!json_obj.has(myjson[i]))
+        for(int i = 0; i < jsonVoteFormat.length; i++)
+            if(!obj.has(jsonVoteFormat[i]))
                 return false;
         return true;
     }
