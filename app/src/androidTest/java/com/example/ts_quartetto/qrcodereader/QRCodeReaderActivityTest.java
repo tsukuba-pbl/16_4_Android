@@ -71,7 +71,7 @@ public class QRCodeReaderActivityTest {
     //    assertEquals("", qh.Read());              // fail
     //    assertEquals(" ", qh.Read());              // fail
     //    assertEquals("asdaf", qh.Read());              // fail
-        assertEquals("test,0,222,999,333", qh.Read().substring(0,17));    // 16.10.12 as CSV added current date, equal substring will be ok
+        assertEquals("test,0,222,999,333", qh.Read().substring(0,18));    // 16.10.12 as CSV added current date, equal substring will be ok
     }
 
     /*
@@ -104,7 +104,7 @@ public class QRCodeReaderActivityTest {
             jsonObject = new JSONObject(correct_json_msg);
         }catch  (JSONException e){}
         qh.Save(jsonObject);
-        String res = qh.Read().substring(18, 36);
+        String res = qh.Read().substring(19, 38);
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try {
             assertNotNull(format.parse(res));   // if res is incorrect, return NULL
@@ -123,7 +123,7 @@ public class QRCodeReaderActivityTest {
             jsonObject = new JSONObject(correct_json_msg);
         } catch (JSONException e) {}
         qh.Save(jsonObject);
-        assertEquals("test,0,222,999,333", qh.Read().substring(0,17));
+        assertEquals("test,0,222,999,333", qh.Read().substring(0,18));
 //        assertEquals("test,222,999,333\n", qh.Read().substring(0,17));    // fail
 //        assertEquals("test,222,999,333", qh.Read());                      // fail
     }
