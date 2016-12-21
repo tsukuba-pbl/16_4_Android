@@ -21,10 +21,10 @@ public class QRCodeReaderActivityTest {
     private JSONObject jsonObject;
     HandlerQRCode qh = new HandlerQRCode();
     private String json_msg =  "{\"ID\":\"test\",\"Name\":\"テスト\",\"Name_1\":\"222\",\"Name_2\":\"999\",\"Name_3\":\"333\"}";
-    private String correct_json_msg = "{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
+    private String correct_json_msg = "{\"voter_id\":\"test\",\"voter_name\":\"テスト\", \"voter_type\":\"0\", \"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
 
     private String json_event = "{\"event_id\":\"007\",\"event_name\":\"enpit\"}";
-    private String json_vote = "{\"event_id\":\"007\",\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
+    private String json_vote = "{\"event_id\":\"007\",\"voter_id\":\"test\",\"voter_name\":\"テスト\", \"voter_type\":\"0\", \"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
 
     private String mytestpath = "/storage/emulated/0/test.csv";   // SDcard path
     HandlerFile fh = new HandlerFile();
@@ -71,7 +71,7 @@ public class QRCodeReaderActivityTest {
     //    assertEquals("", qh.Read());              // fail
     //    assertEquals(" ", qh.Read());              // fail
     //    assertEquals("asdaf", qh.Read());              // fail
-        assertEquals("test,222,999,333", qh.Read().substring(0,16));    // 16.10.12 as CSV added current date, equal substring will be ok
+        assertEquals("test,0,222,999,333", qh.Read().substring(0,17));    // 16.10.12 as CSV added current date, equal substring will be ok
     }
 
     /*
@@ -104,7 +104,7 @@ public class QRCodeReaderActivityTest {
             jsonObject = new JSONObject(correct_json_msg);
         }catch  (JSONException e){}
         qh.Save(jsonObject);
-        String res = qh.Read().substring(17, 36);
+        String res = qh.Read().substring(18, 36);
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try {
             assertNotNull(format.parse(res));   // if res is incorrect, return NULL
@@ -123,7 +123,7 @@ public class QRCodeReaderActivityTest {
             jsonObject = new JSONObject(correct_json_msg);
         } catch (JSONException e) {}
         qh.Save(jsonObject);
-        assertEquals("test,222,999,333", qh.Read().substring(0,16));
+        assertEquals("test,0,222,999,333", qh.Read().substring(0,17));
 //        assertEquals("test,222,999,333\n", qh.Read().substring(0,17));    // fail
 //        assertEquals("test,222,999,333", qh.Read());                      // fail
     }
@@ -134,7 +134,7 @@ public class QRCodeReaderActivityTest {
      */
     @Test
     public void isWrite() throws Exception{
-        String data = "test,111,222,333";
+        String data = "test,0,111,222,333";
         fh.WriteToSD(mytestpath, data);
         assertEquals(data+"\n", fh.ReadFromSD(mytestpath));
     }
@@ -144,14 +144,14 @@ public class QRCodeReaderActivityTest {
     * */
     @Test
     public void CheckVoteJsonFormat() throws JSONException {
-        //　Key値不十分です、name_2とname_3がない
+        //　Key値不十分です、voter_typeとname_2とname_3がない
         JSONObject j1 = new JSONObject("{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\"}");
         //　Key値間違い、idとnameは認識できません
-        JSONObject j2 = new JSONObject("{\"id\":\"test\",\"name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}");
+        JSONObject j2 = new JSONObject("{\"id\":\"test\",\"name\":\"テスト\", \"voter_type\":\"0\", \"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}");
         //　認識できないKey値がある、name_4
-        JSONObject j3 = new JSONObject("{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\", \"name_4\":\"444\"}");
+        JSONObject j3 = new JSONObject("{\"voter_id\":\"test\",\"voter_name\":\"テスト\", \"voter_type\":\"0\", \"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\", \"name_4\":\"444\"}");
         // 認識できないKey値がある、event_name
-        JSONObject j4 = new JSONObject("{\"event_name\":\"enpit\",\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}");
+        JSONObject j4 = new JSONObject("{\"event_name\":\"enpit\",\"voter_id\":\"test\",\"voter_name\":\"テスト\", \"voter_type\":\"0\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}");
         //　正しいKey値を含めたJSONメッセージです
         JSONObject j_ok = new JSONObject(json_vote);
 

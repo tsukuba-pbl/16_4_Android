@@ -17,7 +17,7 @@ public class HandlerQRCode extends HandlerFile {
     static public String eventname = "";
 
     private String[] jsonEventFormat = {"event_id", "event_name"};
-    private String[] jsonVoteFormat = {"event_id", "voter_id", "voter_name", "name_1", "name_2", "name_3"};
+    private String[] jsonVoteFormat = {"event_id", "voter_id", "voter_name", "voter_type", "name_1", "name_2", "name_3"};
     private String basepath = "/storage/emulated/0/";
     private String filepath = "/storage/emulated/0/target.csv";   // SDcard path
     private Utility utility = new Utility();
@@ -73,11 +73,12 @@ public class HandlerQRCode extends HandlerFile {
     public void Save(JSONObject json_obj) {
         try {
             WriteToSD(  GetFilePath(),
-                    json_obj.getString("voter_id") + "," +
-                            json_obj.getString("name_1") + "," +
-                            json_obj.getString("name_2") + "," +
-                            json_obj.getString("name_3") + "," +
-                            utility.GetVoteDate());
+                json_obj.getString("voter_id") + "," +
+                json_obj.getString("voter_type") + "," +
+                json_obj.getString("name_1") + "," +
+                json_obj.getString("name_2") + "," +
+                json_obj.getString("name_3") + "," +
+                utility.GetVoteDate());
         }
         catch (JSONException e) {e.printStackTrace();}
         catch (IOException e) {e.printStackTrace();}
