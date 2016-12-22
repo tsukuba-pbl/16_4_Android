@@ -15,9 +15,10 @@ import java.nio.channels.FileChannel;
 public class HandlerQRCode extends HandlerFile {
     static public String eventid = "";
     static public String eventname = "";
+    static public Integer eventday = 0;
 
-    private String[] jsonEventFormat = {"event_id", "event_name"};
-    private String[] jsonVoteFormat = {"event_id", "voter_id", "voter_name", "name_1", "name_2", "name_3"};
+    private String[] jsonEventFormat = {"event_id", "event_name", "event_day"};
+    private String[] jsonVoteFormat = {"event_id", "voter_id", "name_1", "name_2", "name_3"};
     private String basepath = "/storage/emulated/0/";
     private String filepath = "/storage/emulated/0/target.csv";   // SDcard path
     private Utility utility = new Utility();
