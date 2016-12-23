@@ -32,6 +32,8 @@ public class VoteActivity extends AppCompatActivity {
         eventName.setText(qrHandler.eventname);
         TextView eventId = (TextView)findViewById(R.id.text_event_id);
         eventId.setText(qrHandler.eventid);
+        TextView eventDay = (TextView)findViewById(R.id.text_event_day);
+        eventDay.setText(qrHandler.eventday+"日目");
 
         //create QRCodeReader button
         //ボタン押されたらQRコードリーダの表示
@@ -64,7 +66,7 @@ public class VoteActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            utility.HttpPost(qrHandler.ChangeFilePath(qrHandler.eventid + "_" + mac), server_file_name, server_addr);
+                            utility.HttpPost(qrHandler.ChangeFilePath(qrHandler.eventid + "_" + qrHandler.eventday + "_" + mac), server_file_name, server_addr);
                         } catch (IOException e) {e.printStackTrace();}
                     }
                 })).start();
@@ -79,6 +81,7 @@ public class VoteActivity extends AppCompatActivity {
                 qrHandler.Clear();
                 qrHandler.eventname = "";
                 qrHandler.eventid = "";
+                qrHandler.eventday = 0;
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }

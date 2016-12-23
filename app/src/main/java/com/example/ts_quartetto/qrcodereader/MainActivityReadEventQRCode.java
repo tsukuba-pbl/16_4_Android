@@ -109,6 +109,7 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
             try {
                 qrHandler.eventid = event_json.getString("event_id");
                 qrHandler.eventname = event_json.getString("event_name");
+                qrHandler.eventday = event_json.getInt("event_day");
                 Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
                 startActivity(intent);
             } catch (JSONException e) {
