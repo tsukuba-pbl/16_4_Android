@@ -42,6 +42,7 @@ public class HandlerQRCode extends HandlerFile {
         FileChannel in = new FileInputStream(from).getChannel();
         FileChannel out = new FileOutputStream(to).getChannel();
         out.transferFrom( in, 0, in.size() );
+
         return newFileName;
     }
 
