@@ -36,7 +36,7 @@ public class HandlerQRCode extends HandlerFile {
     * */
     public String ChangeFilePath(String name) throws IOException {
         String newFileName = GetBasePath() + name + "_" + utility.GetUNIXTime() + ".csv";
-
+System.out.println(newFileName);
         File from = new File(filepath);
         File to = new File(newFileName);
 
