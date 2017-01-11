@@ -7,13 +7,27 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 public class MainActivity extends AppCompatActivity {
+    HandlerQRCode qrHandler = new HandlerQRCode();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CheckBox FileClearChk = (CheckBox)findViewById(R.id.chk_fileClear);
+        FileClearChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked)
+                    qrHandler.enableFileClear = true;
+                else
+                    qrHandler.enableFileClear = false;
+            }
+        });
 
         // イベントQRを読み込む
         Button ReaderButton = (Button) findViewById(R.id.btn_read_event_name);

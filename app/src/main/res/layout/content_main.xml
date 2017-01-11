@@ -12,27 +12,38 @@
     tools:context="com.example.tsuruda_tomohiro.qrcodereader.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:text="PosTomのDashboard\nにある\nイベントQRコードを\n読み取ってください"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="200dp"
-        android:layout_marginRight="140dp"
-        android:textSize="70px"
-        android:id="@+id/text_comment" />
-
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="150dp"
+        android:textSize="60px"
+        android:gravity="center"
         android:text="イベントQRを読み込む"
         android:id="@+id/btn_read_event_name"
-        android:layout_marginTop="313dp"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp" />
+
+    <TextView
+        android:text="PosVote"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:textSize="150px"
+        android:id="@+id/title"
+        android:layout_marginTop="44dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-
+    <CheckBox
+        android:text="ファイルクリア可能"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="60px"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="41dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="105dp"
+        android:id="@+id/chk_fileClear" />
 
 </RelativeLayout>

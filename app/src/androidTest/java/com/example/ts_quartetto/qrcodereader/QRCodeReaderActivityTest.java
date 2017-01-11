@@ -20,11 +20,11 @@ import static org.junit.Assert.assertEquals;
 public class QRCodeReaderActivityTest {
     private JSONObject jsonObject;
     HandlerQRCode qh = new HandlerQRCode();
-    private String json_msg =  "{\"ID\":\"test\",\"Name\":\"テスト\",\"Name_1\":\"222\",\"Name_2\":\"999\",\"Name_3\":\"333\"}";
-    private String correct_json_msg = "{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
+    private String json_msg =  "{\"ID\":\"test\",\"Name_1\":\"222\",\"Name_2\":\"999\",\"Name_3\":\"333\"}";
+    private String correct_json_msg = "{\"voter_id\":\"test\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
 
-    private String json_event = "{\"event_id\":\"007\",\"event_name\":\"enpit\"}";
-    private String json_vote = "{\"event_id\":\"007\",\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
+    private String json_event = "{\"event_id\":\"007\",\"event_name\":\"enpit\",\"event_day\":\"1\"}";
+    private String json_vote = "{\"event_id\":\"007\",\"voter_id\":\"test\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
 
     private String mytestpath = "/storage/emulated/0/test.csv";   // SDcard path
     HandlerFile fh = new HandlerFile();
@@ -145,12 +145,12 @@ public class QRCodeReaderActivityTest {
     @Test
     public void CheckVoteJsonFormat() throws JSONException {
         //　Key値不十分です、name_2とname_3がない
-        JSONObject j1 = new JSONObject("{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\"}");
+        JSONObject j1 = new JSONObject("{\"voter_id\":\"test\",\"name_1\":\"222\"}");
         //　Key値間違い、idとnameは認識できません
         JSONObject j2 = new JSONObject("{\"id\":\"test\",\"name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}");
-        //　認識できないKey値がある、name_4
+        //　認識できないKey値がある、name_4, voter_name
         JSONObject j3 = new JSONObject("{\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\", \"name_4\":\"444\"}");
-        // 認識できないKey値がある、event_name
+        // 認識できないKey値がある、event_name, voter_name
         JSONObject j4 = new JSONObject("{\"event_name\":\"enpit\",\"voter_id\":\"test\",\"voter_name\":\"テスト\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}");
         //　正しいKey値を含めたJSONメッセージです
         JSONObject j_ok = new JSONObject(json_vote);
