@@ -16,6 +16,7 @@ public class HandlerQRCode extends HandlerFile {
     static public String eventid = "";
     static public String eventname = "";
     static public Integer eventday = 0;
+    static public Boolean enableFileClear = false;
 
     private String[] jsonEventFormat = {"event_id", "event_name", "event_day"};
     private String[] jsonVoteFormat = {"voter_id", "event_id", "name_1", "name_2", "name_3"};
@@ -90,9 +91,12 @@ public class HandlerQRCode extends HandlerFile {
         catch (IOException e) {e.printStackTrace();}
     }
 
-    public String Read() throws IOException { return ReadFromSD(GetFilePath());}
+    public String Read() throws IOException {
+        return ReadFromSD(GetFilePath());
+    }
 
     public void Clear() {
-        DeleteFromSD(GetFilePath());
+    //        DeleteFromSD(GetFilePath());
+            DeleteLikeNameFromSD(GetBasePath(), eventid + "_" +  eventday);
     }
 }

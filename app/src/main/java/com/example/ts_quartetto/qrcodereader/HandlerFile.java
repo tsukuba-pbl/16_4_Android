@@ -11,6 +11,19 @@ import java.io.IOException;
  */
 public class HandlerFile {
 
+    // basePathの下で、すべてのファイルの中で、likeNameを含めているファイルを削除する
+    // SaveファイルとUploadファイルの名前が違って、一緒に削除したいです
+    public void DeleteLikeNameFromSD(String filepath, String likeName)
+    {
+        File folder = new File(filepath);
+        File[] files = folder.listFiles();
+        for(File file:files){
+            if(file.getName().contains(likeName)){
+                file.delete();
+            }
+        }
+    }
+
     public void DeleteFromSD(String filepath)
     {
         File file = new File(filepath);

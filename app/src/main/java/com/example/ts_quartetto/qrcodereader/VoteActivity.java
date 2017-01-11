@@ -1,6 +1,8 @@
 package com.example.ts_quartetto.qrcodereader;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -51,12 +53,36 @@ public class VoteActivity extends AppCompatActivity {
         ClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    //ファイルの中身削除
-                    qrHandler.Clear();
-                }catch(Exception e){}
+                new AlertDialog.Builder(VoteActivity.this)
+                        .setTitle("注意！")
+                        .setMessage( "ファイルをクリアしますか\n")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                //ファイルの中身削除
+                                qrHandler.Clear();
+                                dialog.dismiss();
+                                Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
             }
         });
+        // 管理者以外の場合、ファイルクリア禁止
+        if(!qrHandler.enableFileClear)
+            ClearButton.setEnabled(false);
 
         Button SubmitButton = (Button) findViewById(R.id.btn_upload_result);
         SubmitButton.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +107,7 @@ public class VoteActivity extends AppCompatActivity {
                 qrHandler.eventname = "";
                 qrHandler.eventid = "";
                 qrHandler.eventday = 0;
+                qrHandler.enableFileClear = false;
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
