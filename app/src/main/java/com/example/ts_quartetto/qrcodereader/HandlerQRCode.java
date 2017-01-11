@@ -18,16 +18,15 @@ public class HandlerQRCode extends HandlerFile {
     static public Integer eventday = 0;
 
     private String[] jsonEventFormat = {"event_id", "event_name", "event_day"};
-    private String[] jsonVoteFormat = {"event_id", "voter_id", "name_1", "name_2", "name_3"};
+    private String[] jsonVoteFormat = {"voter_id", "event_id", "name_1", "name_2", "name_3"};
     private String basepath = "/storage/emulated/0/";
-    private String filepath = "/storage/emulated/0/target.csv";   // SDcard path
     private Utility utility = new Utility();
 
     public String GetBasePath(){
         return basepath;
     }
-    public String GetFilePath(){
-        return filepath;
+    public String GetFilePath() {
+        return basepath + eventid + "_" +  eventday + ".csv";
     }
 
     /*
@@ -35,9 +34,9 @@ public class HandlerQRCode extends HandlerFile {
     *   filepath will not be deleted
     * */
     public String ChangeFilePath(String name) throws IOException {
-        String newFileName = GetBasePath() + name + "_" + utility.GetUNIXTime() + ".csv";
-System.out.println(newFileName);
-        File from = new File(filepath);
+        String newFileName = GetBasePath() + name + ".csv";
+
+        File from = new File(new String(basepath + eventid + "_" +  eventday + ".csv"));
         File to = new File(newFileName);
 
         FileChannel in = new FileInputStream(from).getChannel();
@@ -55,20 +54,26 @@ System.out.println(newFileName);
     public Boolean CheckEventQRCode(JSONObject obj)
     {
         if(jsonEventFormat.length != obj.length())
+        {
             return false;
+        }
         for(int i = 0; i < jsonEventFormat.length; i++)
             if(!obj.has(jsonEventFormat[i]))
+            {
                 return false;
-        return true;
+            }
+            return true;
     }
 
     public Boolean CheckVoteQRCode(JSONObject obj)
     {
         if(jsonVoteFormat.length != obj.length())
             return false;
+
         for(int i = 0; i < jsonVoteFormat.length; i++)
             if(!obj.has(jsonVoteFormat[i]))
                 return false;
+
         return true;
     }
 
@@ -76,19 +81,18 @@ System.out.println(newFileName);
         try {
             WriteToSD(  GetFilePath(),
                     json_obj.getString("voter_id") + "," +
-                            json_obj.getString("name_1") + "," +
-                            json_obj.getString("name_2") + "," +
-                            json_obj.getString("name_3") + "," +
-                            utility.GetVoteDate());
+                    json_obj.getString("name_1") + "," +
+                    json_obj.getString("name_2") + "," +
+                    json_obj.getString("name_3") + "," +
+                    utility.GetVoteDate());
         }
         catch (JSONException e) {e.printStackTrace();}
         catch (IOException e) {e.printStackTrace();}
     }
 
-    public String Read() throws IOException { return ReadFromSD(filepath);}
+    public String Read() throws IOException { return ReadFromSD(GetFilePath());}
 
     public void Clear() {
-        DeleteFromSD(filepath);
+        DeleteFromSD(GetFilePath());
     }
-
 }
