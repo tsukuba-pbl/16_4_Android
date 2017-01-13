@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.ts_quartetto.qrcodereader.Activity_3">
+
+    <TextView
+        android:text="2.投票データ送信ボタンを押す"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:textSize="70px"
+        android:textColor="@android:color/black"
+        android:gravity="left"
+        android:id="@+id/t_msg_2"
+        android:layout_below="@+id/t_msg_1"
+        android:layout_alignLeft="@+id/t_msg_1"
+        android:layout_alignStart="@+id/t_msg_1" />
+
+    <TextView
+        android:text="1.このAndroidをオンライン環境に持ち込む"
+        android:textSize="70px"
+        android:textColor="@android:color/black"
+        android:gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:id="@+id/t_msg_1"
+        android:layout_below="@+id/t_title_3"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
+
+    <Button
+        android:text="投票データ送信"
+        android:textSize="90px"
+        android:layout_width="600dp"
+        android:layout_height="150dp"
+        android:background="@android:color/holo_blue_light"
+        android:id="@+id/btn_uploadData"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:text="3.PosTomから投票データをダウンロード"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="70px"
+        android:textColor="@android:color/black"
+        android:gravity="left"
+        android:layout_marginTop="34dp"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/t_msg_2"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/b3"
+        android:layout_marginTop="40dp"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/textView6"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="3.開催"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="100px"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="42dp"
+        android:id="@+id/t_title_3"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

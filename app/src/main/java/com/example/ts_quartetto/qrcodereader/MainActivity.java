@@ -1,6 +1,9 @@
 package com.example.ts_quartetto.qrcodereader;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,36 +12,135 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
+    Button btn_fileClear;
     HandlerQRCode qrHandler = new HandlerQRCode();
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CheckBox FileClearChk = (CheckBox)findViewById(R.id.chk_fileClear);
+        TextView t_eventName = (TextView) findViewById(R.id.t_eventName);
+        TextView t_eventId = (TextView) findViewById(R.id.t_eventId);
+        TextView t_eventDay = (TextView) findViewById(R.id.t_eventDay);
+
+        CheckBox FileClearChk = (CheckBox) findViewById(R.id.checkBox);
+        Button btn_1 = (Button) findViewById(R.id.btn_1);
+        Button btn_2 = (Button) findViewById(R.id.btn_2);
+        Button btn_3 = (Button) findViewById(R.id.btn_3);
+        Button btn_4 = (Button) findViewById(R.id.btn_4);
+        btn_fileClear = (Button) findViewById(R.id.btn_fileClear);
+
+        if (StateControl.state >= StateControl.STATE_STEP_2) {
+            t_eventName.setText(StateControl.eventname);
+            t_eventId.setText(StateControl.eventid);
+            t_eventDay.setText(String.valueOf(StateControl.eventday));
+            btn_2.setBackgroundColor(0xff33b5e5);
+            if (StateControl.state >= StateControl.STATE_STEP_3) {
+                btn_3.setBackgroundColor(0xff33b5e5);
+                if (StateControl.state == StateControl.STATE_STEP_4) {
+                    btn_4.setBackgroundColor(0xff33b5e5);
+                }
+            }
+        }
+
         FileClearChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked)
-                    qrHandler.enableFileClear = true;
+                if (isChecked && StateControl.state >= StateControl.STATE_STEP_2)
+                {
+                    btn_fileClear.setBackgroundColor(0xffc53929);
+                    btn_fileClear.setEnabled(true);
+                }
                 else
-                    qrHandler.enableFileClear = false;
+                {
+                    btn_fileClear.setBackgroundColor(0xffffffff);
+                    btn_fileClear.setEnabled(false);
+                }
             }
         });
 
-        // イベントQRを読み込む
-        Button ReaderButton = (Button) findViewById(R.id.btn_read_event_name);
-        ReaderButton.setOnClickListener(new View.OnClickListener(){
+        // Button_1
+        btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), MainActivityReadEventQRCode.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Activity_1.class);
                 startActivity(intent);
             }
         });
 
+        btn_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Activity_2.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Activity_3.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Activity_4.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_fileClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("注意！")
+                        .setMessage( "ファイルをクリアしますか\n")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                //ファイルの中身削除
+                                qrHandler.Clear();
+                                dialog.dismiss();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
+            }
+        });
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -61,5 +163,41 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Main Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

@@ -13,11 +13,6 @@ import java.nio.channels.FileChannel;
  * Created by we on 2016/10/5.
  */
 public class HandlerQRCode extends HandlerFile {
-    static public String eventid = "";
-    static public String eventname = "";
-    static public Integer eventday = 0;
-    static public Boolean enableFileClear = false;
-
     private String[] jsonEventFormat = {"event_id", "event_name", "event_day"};
     private String[] jsonVoteFormat = {"voter_id", "event_id", "name_1", "name_2", "name_3"};
     private String basepath = "/storage/emulated/0/";
@@ -27,7 +22,7 @@ public class HandlerQRCode extends HandlerFile {
         return basepath;
     }
     public String GetFilePath() {
-        return basepath + eventid + "_" +  eventday + ".csv";
+        return basepath + StateControl.eventid + "_" +  StateControl.eventday + ".csv";
     }
 
     /*
@@ -37,7 +32,7 @@ public class HandlerQRCode extends HandlerFile {
     public String ChangeFilePath(String name) throws IOException {
         String newFileName = GetBasePath() + name + ".csv";
 
-        File from = new File(new String(basepath + eventid + "_" +  eventday + ".csv"));
+        File from = new File(new String(basepath + StateControl.eventid + "_" +  StateControl.eventday + ".csv"));
         File to = new File(newFileName);
 
         FileChannel in = new FileInputStream(from).getChannel();
@@ -49,7 +44,7 @@ public class HandlerQRCode extends HandlerFile {
 
     public Boolean CheckEventId(String id)
     {
-        return eventid.equals(id);
+        return StateControl.eventid.equals(id);
     }
 
     public Boolean CheckEventQRCode(JSONObject obj)
@@ -97,6 +92,6 @@ public class HandlerQRCode extends HandlerFile {
 
     public void Clear() {
     //        DeleteFromSD(GetFilePath());
-            DeleteLikeNameFromSD(GetBasePath(), eventid + "_" +  eventday);
+            DeleteLikeNameFromSD(GetBasePath(), StateControl.eventid + "_" +  StateControl.eventday);
     }
 }

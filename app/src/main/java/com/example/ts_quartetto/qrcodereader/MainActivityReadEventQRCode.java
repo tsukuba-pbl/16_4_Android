@@ -46,7 +46,6 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
         // null の場合
         if (intentResult == null) {
             utility.WriteDebugLog("TAG", "Weird");
-
             super.onActivityResult(requestCode, resultCode, data);
             return;
         }
@@ -98,7 +97,7 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
                     public void run()
                     {
                         dia.dismiss();
-                        Intent intent = new Intent(getApplicationContext(), MainActivityReadEventQRCode.class);
+                        Intent intent = new Intent(getApplicationContext(), Activity_1.class);
                         startActivity(intent);
                     }
                 }, displayTime);
@@ -107,10 +106,11 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
 
             // イベント名を抽出し保存してから、投票画面に行く
             try {
-                qrHandler.eventid = event_json.getString("event_id");
-                qrHandler.eventname = event_json.getString("event_name");
-                qrHandler.eventday = event_json.getInt("event_day");
-                Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
+                StateControl.eventid = event_json.getString("event_id");
+                StateControl.eventname = event_json.getString("event_name");
+                StateControl.eventday = event_json.getInt("event_day");
+                StateControl.state = StateControl.STATE_STEP_2;
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             } catch (JSONException e) {
                 e.printStackTrace();
