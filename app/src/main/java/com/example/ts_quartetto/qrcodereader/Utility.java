@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by we on 2016/10/5.
@@ -60,6 +62,15 @@ public class Utility {
     {
         String ret = String.valueOf(System.currentTimeMillis()/1000);   //  Mill/1000- > seconds
         return ret;
+    }
+
+    public boolean StrLike(String str,String regex,boolean bool)
+    {
+        regex = regex.replaceAll("\\*", ".*");
+        regex = regex.replaceAll("\\?", ".");
+        Pattern pattern = Pattern.compile(regex,bool? Pattern.CASE_INSENSITIVE:0);
+        Matcher matcher = pattern.matcher(str);
+        return matcher.find();
     }
 
     public void WriteDebugLog(String s1, String s2)

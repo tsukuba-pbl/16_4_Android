@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -110,6 +109,11 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
                 StateControl.eventname = event_json.getString("event_name");
                 StateControl.eventday = event_json.getInt("event_day");
                 StateControl.state = StateControl.STATE_STEP_2;
+
+                // Refer to UI design, we need clear file after Process_1 or 4, only assign the value at here and do not init it
+                StateControl.lastEventname = StateControl.eventname;
+                StateControl.lastEventid = StateControl.eventid;
+
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             } catch (JSONException e) {

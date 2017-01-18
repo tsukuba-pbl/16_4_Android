@@ -1,0 +1,12 @@
+<LinearLayout android:id="@+id/LinearLayout01"
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    android:orientation="horizontal" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView android:text="" android:id="@+id/txtKey"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:padding="10dp" android:textSize="16sp"></TextView>
+    <TextView android:text="" android:id="@+id/txtValue"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:padding="10dp" android:textSize="16sp"></TextView>
+
+</LinearLayout>

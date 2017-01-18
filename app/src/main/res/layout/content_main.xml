@@ -66,18 +66,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkBox"
-        android:layout_alignBaseline="@+id/btn_fileClear"
-        android:layout_alignBottom="@+id/btn_fileClear"
+        android:layout_alignBaseline="@+id/btn_management"
+        android:layout_alignBottom="@+id/btn_management"
         android:layout_alignLeft="@+id/btn_4"
         android:layout_alignStart="@+id/btn_4" />
 
     <Button
-        android:text="投票データの削除"
+        android:text="管理者ページ"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:textSize="50px"
         android:layout_marginTop="28dp"
-        android:id="@+id/btn_fileClear"
+        android:id="@+id/btn_management"
         android:layout_below="@+id/btn_3"
         android:layout_alignLeft="@+id/btn_3"
         android:layout_alignStart="@+id/btn_3" />
@@ -87,9 +87,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="50px"
-        android:layout_below="@+id/btn_fileClear"
-        android:layout_alignLeft="@+id/btn_fileClear"
-        android:layout_alignStart="@+id/btn_fileClear"
+        android:layout_below="@+id/btn_management"
+        android:layout_alignLeft="@+id/btn_management"
+        android:layout_alignStart="@+id/btn_management"
         android:layout_marginTop="21dp"
         android:id="@+id/t_message" />
 
@@ -107,6 +107,7 @@
     <TextView
         android:text=" "
         android:textSize="70px"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/t_eventName"
@@ -119,6 +120,7 @@
     <TextView
         android:text=" "
         android:textSize="70px"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
@@ -131,6 +133,7 @@
     <TextView
         android:text=" "
         android:textSize="100px"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
