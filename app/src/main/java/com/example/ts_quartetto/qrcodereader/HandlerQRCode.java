@@ -95,4 +95,8 @@ public class HandlerQRCode extends HandlerFile {
         if(StateControl.eventid != " " && StateControl.eventday != 0)
             DeleteLikeNameFromSD(GetBasePath(), StateControl.eventid + "_" +  StateControl.eventday);
     }
+
+    public void Clear(String likeName) {
+        DeleteLikeNameFromSD(GetBasePath(), likeName);
+    }
 }

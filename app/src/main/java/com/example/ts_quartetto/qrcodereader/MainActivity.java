@@ -37,22 +37,30 @@ public class MainActivity extends AppCompatActivity {
         TextView t_eventId = (TextView) findViewById(R.id.t_eventId);
         TextView t_eventDay = (TextView) findViewById(R.id.t_eventDay);
 
-        CheckBox FileClearChk = (CheckBox) findViewById(R.id.checkBox);
+        CheckBox managementMode = (CheckBox) findViewById(R.id.checkBox);
         Button btn_1 = (Button) findViewById(R.id.btn_1);
         Button btn_2 = (Button) findViewById(R.id.btn_2);
         Button btn_3 = (Button) findViewById(R.id.btn_3);
         Button btn_4 = (Button) findViewById(R.id.btn_4);
         btn_management = (Button) findViewById(R.id.btn_management);
 
+        btn_2.setEnabled(false);
+        btn_3.setEnabled(false);
+        btn_4.setEnabled(false);
+        btn_management.setEnabled(false);
+
         if (StateControl.state >= StateControl.STATE_STEP_2) {
             t_eventName.setText(StateControl.eventname);
             t_eventId.setText(StateControl.eventid);
             t_eventDay.setText(String.valueOf(StateControl.eventday));
             btn_2.setBackgroundColor(0xff33b5e5);
+            btn_2.setEnabled(true);
             if (StateControl.state >= StateControl.STATE_STEP_3) {
                 btn_3.setBackgroundColor(0xff33b5e5);
+                btn_3.setEnabled(true);
                 if (StateControl.state == StateControl.STATE_STEP_4) {
                     btn_4.setBackgroundColor(0xff33b5e5);
+                    btn_4.setEnabled(true);
                     if (StateControl.state == StateControl.STATE_STEP_FINISH) {
                         btn_management.setBackgroundColor(0xff33b5e5);
                     }
@@ -60,17 +68,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        FileClearChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        managementMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked )// && StateControl.state >= StateControl.STATE_STEP_2)
+                if (isChecked )
                 {
-               //     btn_fileClear.setBackgroundColor(0xffc53929);
                     btn_management.setEnabled(true);
                 }
                 else
                 {
-               //     btn_fileClear.setBackgroundColor(0xffffffff);
                     btn_management.setEnabled(false);
                 }
             }
