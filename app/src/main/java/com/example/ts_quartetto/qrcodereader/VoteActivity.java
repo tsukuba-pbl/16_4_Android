@@ -31,11 +31,11 @@ public class VoteActivity extends AppCompatActivity {
         macAddr = macAddr.replaceAll("[^0-9a-zA-Z]","");
 
         TextView eventName = (TextView)findViewById(R.id.text_event_name);
-        eventName.setText(qrHandler.eventname);
+        eventName.setText(StateControl.eventname);
         TextView eventId = (TextView)findViewById(R.id.text_event_id);
-        eventId.setText(qrHandler.eventid);
+        eventId.setText(StateControl.eventid);
         TextView eventDay = (TextView)findViewById(R.id.text_event_day);
-        eventDay.setText(qrHandler.eventday+"日目");
+        eventDay.setText(StateControl.eventday+"日目");
 
         //create QRCodeReader button
         //ボタン押されたらQRコードリーダの表示
@@ -52,7 +52,8 @@ public class VoteActivity extends AppCompatActivity {
         Button ClearButton = (Button) findViewById(R.id.btn_clear_file);
         ClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 new AlertDialog.Builder(VoteActivity.this)
                         .setTitle("注意！")
                         .setMessage( "ファイルをクリアしますか\n")
@@ -81,7 +82,7 @@ public class VoteActivity extends AppCompatActivity {
             }
         });
         // 管理者以外の場合、ファイルクリア禁止
-        if(!qrHandler.enableFileClear)
+        if(!StateControl.enableFileClear)
             ClearButton.setEnabled(false);
 
         Button SubmitButton = (Button) findViewById(R.id.btn_upload_result);
@@ -92,7 +93,7 @@ public class VoteActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            utility.HttpPost(qrHandler.ChangeFilePath(qrHandler.eventid + "_" + qrHandler.eventday + "_" + macAddr + "_" + utility.GetUNIXTime()), server_file_name, server_addr);
+                            utility.HttpPost(qrHandler.ChangeFilePath(StateControl.eventid + "_" + StateControl.eventday + "_" + macAddr + "_" + utility.GetUNIXTime()), server_file_name, server_addr);
                         } catch (IOException e) {e.printStackTrace();}
                     }
                 })).start();
@@ -104,10 +105,10 @@ public class VoteActivity extends AppCompatActivity {
         FinishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                qrHandler.eventname = "";
-                qrHandler.eventid = "";
-                qrHandler.eventday = 0;
-                qrHandler.enableFileClear = false;
+                StateControl.eventname = "";
+                StateControl.eventid = "";
+                StateControl.eventday = 0;
+                StateControl.enableFileClear = false;
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }

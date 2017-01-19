@@ -13,37 +13,133 @@
     tools:showIn="@layout/activity_main">
 
     <Button
-        android:layout_width="350dp"
+        android:text="1.準備"
+        android:layout_width="250dp"
         android:layout_height="150dp"
-        android:textSize="60px"
+        android:textSize="100px"
         android:gravity="center"
-        android:text="イベントQRを読み込む"
-        android:id="@+id/btn_read_event_name"
-        android:layout_below="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp" />
-
-    <TextView
-        android:text="PosVote"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:textSize="150px"
-        android:id="@+id/title"
-        android:layout_marginTop="44dp"
+        android:background="@android:color/holo_blue_light"
+        android:id="@+id/btn_1"
+        android:layout_marginTop="340dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="64dp"
+        android:layout_marginStart="64dp" />
+
+    <Button
+        android:text="3.集計"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:textSize="100px"
+        android:layout_marginTop="28dp"
+        android:id="@+id/btn_3"
+        android:layout_below="@+id/btn_1"
+        android:layout_alignLeft="@+id/btn_1"
+        android:layout_alignStart="@+id/btn_1" />
+
+    <Button
+        android:text="4.終了"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:textSize="100px"
+        android:id="@+id/btn_4"
+        android:layout_alignTop="@+id/btn_3"
+        android:layout_alignLeft="@+id/btn_2"
+        android:layout_alignStart="@+id/btn_2" />
+
+    <Button
+        android:text="2.開催"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:textSize="100px"
+        android:id="@+id/btn_2"
+        android:layout_marginRight="79dp"
+        android:layout_marginEnd="79dp"
+        android:layout_alignBottom="@+id/btn_1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <CheckBox
-        android:text="ファイルクリア可能"
+        android:text="管理者モード"
+        android:textSize="50px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="60px"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="41dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginBottom="105dp"
-        android:id="@+id/chk_fileClear" />
+        android:id="@+id/checkBox"
+        android:layout_alignBaseline="@+id/btn_management"
+        android:layout_alignBottom="@+id/btn_management"
+        android:layout_alignLeft="@+id/btn_4"
+        android:layout_alignStart="@+id/btn_4" />
+
+    <Button
+        android:text="管理者ページ"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textSize="50px"
+        android:layout_marginTop="28dp"
+        android:id="@+id/btn_management"
+        android:layout_below="@+id/btn_3"
+        android:layout_alignLeft="@+id/btn_3"
+        android:layout_alignStart="@+id/btn_3" />
+
+    <TextView
+        android:text="※投票データの削除するのは管理者モードになってください"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50px"
+        android:layout_below="@+id/btn_management"
+        android:layout_alignLeft="@+id/btn_management"
+        android:layout_alignStart="@+id/btn_management"
+        android:layout_marginTop="21dp"
+        android:id="@+id/t_message" />
+
+    <TextView
+        android:text="集計機"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="100px"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:id="@+id/t_title" />
+
+    <TextView
+        android:text=" "
+        android:textSize="70px"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/t_eventName"
+        android:layout_alignLeft="@+id/t_eventName"
+        android:layout_alignStart="@+id/t_eventName"
+        android:layout_marginTop="31dp"
+        android:id="@+id/t_eventId"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:text=" "
+        android:textSize="70px"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:id="@+id/t_eventDay"
+        android:layout_below="@+id/t_eventName"
+        android:layout_alignLeft="@+id/t_eventName"
+        android:layout_alignStart="@+id/t_eventName"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:text=" "
+        android:textSize="100px"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:id="@+id/t_eventName"
+        android:layout_below="@+id/t_title"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

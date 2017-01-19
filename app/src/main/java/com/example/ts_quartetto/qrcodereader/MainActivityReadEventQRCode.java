@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -46,7 +45,6 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
         // null の場合
         if (intentResult == null) {
             utility.WriteDebugLog("TAG", "Weird");
-
             super.onActivityResult(requestCode, resultCode, data);
             return;
         }
@@ -98,7 +96,7 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
                     public void run()
                     {
                         dia.dismiss();
-                        Intent intent = new Intent(getApplicationContext(), MainActivityReadEventQRCode.class);
+                        Intent intent = new Intent(getApplicationContext(), Activity_1.class);
                         startActivity(intent);
                     }
                 }, displayTime);
@@ -107,10 +105,16 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
 
             // イベント名を抽出し保存してから、投票画面に行く
             try {
-                qrHandler.eventid = event_json.getString("event_id");
-                qrHandler.eventname = event_json.getString("event_name");
-                qrHandler.eventday = event_json.getInt("event_day");
-                Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
+                StateControl.eventid = event_json.getString("event_id");
+                StateControl.eventname = event_json.getString("event_name");
+                StateControl.eventday = event_json.getInt("event_day");
+                StateControl.state = StateControl.STATE_STEP_2;
+
+                // Refer to UI design, we need clear file after Process_1 or 4, only assign the value at here and do not init it
+                StateControl.lastEventname = StateControl.eventname;
+                StateControl.lastEventid = StateControl.eventid;
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.sax.StartElementListener;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -39,6 +41,7 @@ public class VoteActivityReadVoteQRCode extends AppCompatActivity {
         ii.setCameraId(1);
         ii.initiateScan();
     }
+
     //スキャンした時の結果の処理
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -58,7 +61,8 @@ public class VoteActivityReadVoteQRCode extends AppCompatActivity {
         if (intentResult.getContents() == null) {
             // 戻るボタンをタップした場合
             utility.WriteDebugLog("TAG", "Cancelled Scan");
-            Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
+            StateControl.state = StateControl.STATE_STEP_3;
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         } else {
             // カメラで読み取った情報をラベルに表示
