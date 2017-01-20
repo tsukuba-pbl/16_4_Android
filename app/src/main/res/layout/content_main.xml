@@ -83,7 +83,7 @@
         android:layout_alignStart="@+id/btn_3" />
 
     <TextView
-        android:text="※投票データの削除するには、まず管理モードにして管理者ページに遷移して下さい"
+        android:text="※投票データを削除するには、まず管理モードにして管理者ページに遷移して下さい"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="35px"
