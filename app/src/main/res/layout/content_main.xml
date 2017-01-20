@@ -83,10 +83,10 @@
         android:layout_alignStart="@+id/btn_3" />
 
     <TextView
-        android:text="※投票データの削除するのは管理者モードになってください"
+        android:text="※投票データを削除するには、まず管理モードにして管理者ページに遷移して下さい"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="50px"
+        android:textSize="35px"
         android:layout_below="@+id/btn_management"
         android:layout_alignLeft="@+id/btn_management"
         android:layout_alignStart="@+id/btn_management"
@@ -106,32 +106,6 @@
 
     <TextView
         android:text=" "
-        android:textSize="70px"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/t_eventName"
-        android:layout_alignLeft="@+id/t_eventName"
-        android:layout_alignStart="@+id/t_eventName"
-        android:layout_marginTop="31dp"
-        android:id="@+id/t_eventId"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:text=" "
-        android:textSize="70px"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:id="@+id/t_eventDay"
-        android:layout_below="@+id/t_eventName"
-        android:layout_alignLeft="@+id/t_eventName"
-        android:layout_alignStart="@+id/t_eventName"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:text=" "
         android:textSize="100px"
         android:gravity="center"
         android:layout_width="wrap_content"
@@ -139,6 +113,28 @@
         android:layout_marginTop="32dp"
         android:id="@+id/t_eventName"
         android:layout_below="@+id/t_title"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text=" "
+        android:textSize="70px"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:id="@+id/t_eventId"
+        android:layout_below="@+id/t_eventName"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text=" "
+        android:textSize="70px"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:id="@+id/t_eventDay"
+        android:layout_below="@+id/t_eventId"
         android:layout_centerHorizontal="true" />
 
 
