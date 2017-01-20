@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (StateControl.state >= StateControl.STATE_STEP_2) {
             t_eventName.setText(StateControl.eventname);
-            t_eventId.setText(StateControl.eventid);
-            t_eventDay.setText(String.valueOf(StateControl.eventday));
+            t_eventId.setText("(イベントID：" + StateControl.eventid+ ")");
+            t_eventDay.setText(String.valueOf(StateControl.eventday) + "日目");
             btn_2.setBackgroundColor(0xff33b5e5);
             btn_2.setEnabled(true);
             if (StateControl.state >= StateControl.STATE_STEP_3) {
