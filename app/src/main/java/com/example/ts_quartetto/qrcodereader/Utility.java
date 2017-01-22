@@ -7,6 +7,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -34,6 +35,7 @@ public class Utility {
     {
         try {
             HttpClient httpClient = new DefaultHttpClient();
+            addr = new String("http://203.137.178.56/PosTom/votes/upload");
             //HttpPost httpPost = new HttpPost("http://ts-quartetto.herokuapp.com/sprint1_9/receive_file.php");
             HttpPost httpPost = new HttpPost(addr);
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -41,7 +43,8 @@ public class Utility {
             FileBody fileBody = new FileBody(new File(filepath));
             multipartEntity.addPart(filename, fileBody);
             httpPost.setEntity(multipartEntity);
-            httpClient.execute(httpPost, responseHandler);
+            String response = httpClient.execute(httpPost, responseHandler);
+            Log.d("response", "data :" + response);
         } catch (MalformedURLException e) {e.printStackTrace();
         } catch (IOException e) {e.printStackTrace();}
     }
