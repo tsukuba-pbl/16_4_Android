@@ -31,7 +31,7 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
         IntentIntegrator ii = new IntentIntegrator(this);
         ii.setScanningRectangle(700, 700);
         //インカメ
-        ii.setCameraId(1);
+        ii.setCameraId(0);  // 0->back  1->front
         ii.initiateScan();
     }
 
