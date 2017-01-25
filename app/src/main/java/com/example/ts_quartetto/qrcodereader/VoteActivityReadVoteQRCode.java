@@ -37,8 +37,12 @@ public class VoteActivityReadVoteQRCode extends AppCompatActivity {
         //QRCodeScannerの起動
         IntentIntegrator ii = new IntentIntegrator(this);
         ii.setScanningRectangle(700, 700);
-        //インカメ
-        ii.setCameraId(1);
+        // Prefer to using front camera when reading event QR code
+        // Has read event QR code, the device must be equipped at least one camera
+        if(utility.hasFrontCamera())
+            ii.setCameraId(1);
+        else
+            ii.setCameraId(0);
         ii.initiateScan();
     }
 

@@ -30,8 +30,36 @@ public class MainActivityReadEventQRCode extends AppCompatActivity {
         //QRCodeScannerの起動
         IntentIntegrator ii = new IntentIntegrator(this);
         ii.setScanningRectangle(700, 700);
-        //インカメ
-        ii.setCameraId(0);  // 0->back  1->front
+        //Prefer to using back camera when reading event QR code
+        if(utility.hasBackCamera())
+            ii.setCameraId(0);
+        else if(utility.hasFrontCamera())
+            ii.setCameraId(1);
+        else {
+            String title = new String("投票できません");
+            String msg = new String("カメラを搭載する集計機をご利用ください");
+            String btn = new String("　");
+            int displayTime = 2000;
+
+            dia = new AlertDialog.Builder(MainActivityReadEventQRCode.this)
+                    .setTitle(title)
+                    .setMessage(msg)
+                    .setNegativeButton(btn, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    dia.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), VoteActivityReadVoteQRCode.class);
+                    startActivity(intent);
+                }
+            }, displayTime);
+            return;
+        }
         ii.initiateScan();
     }
 
