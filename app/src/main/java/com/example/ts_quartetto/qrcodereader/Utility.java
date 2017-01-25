@@ -3,8 +3,10 @@ package com.example.ts_quartetto.qrcodereader;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.hardware.Camera;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.util.Log;
 
 import org.apache.http.client.HttpClient;
@@ -44,6 +46,26 @@ public class Utility {
             httpClient.execute(httpPost, responseHandler);
         } catch (MalformedURLException e) {e.printStackTrace();
         } catch (IOException e) {e.printStackTrace();}
+    }
+
+    public static boolean hasBackCamera() {
+        return checkCameraFacing(0);
+    }
+
+    public static boolean hasFrontCamera() {
+        return checkCameraFacing(1);
+    }
+
+    private static boolean checkCameraFacing(final int facing) {
+        final int cameraCount = Camera.getNumberOfCameras();
+        Camera.CameraInfo info = new Camera.CameraInfo();
+        for (int i = 0; i < cameraCount; i++) {
+            Camera.getCameraInfo(i, info);
+            if (facing == info.facing) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String GetVoteDate()
