@@ -30,7 +30,6 @@
             android:label="@string/title_activity_qrcode_reader"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivityReadEventQRCode" />
-        <activity android:name=".VoteActivity" />
         <activity android:name=".Activity_1" />
         <activity android:name=".Activity_2" />
         <activity android:name=".Activity_3" />

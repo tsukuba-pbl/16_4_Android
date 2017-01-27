@@ -18,26 +18,23 @@ import static org.junit.Assert.assertEquals;
  * Created by tsuruda_tomohiro on 2016/06/30.
  */
 public class QRCodeReaderActivityTest {
-    private JSONObject jsonObject;
+    private JSONObject json_obj;
     HandlerQRCode qh = new HandlerQRCode();
-    private String json_msg =  "{\"ID\":\"test\",\"Name_1\":\"222\",\"Name_2\":\"999\",\"Name_3\":\"333\"}";
+    private String incorrect_json_msg =  "{\"ID\":\"test\",\"Name_1\":\"222\",\"Name_2\":\"999\",\"Name_3\":\"333\"}";
     private String correct_json_msg = "{\"voter_id\":\"test\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
 
     private String json_event = "{\"event_id\":\"007\",\"event_name\":\"enpit\",\"event_day\":\"1\"}";
     private String json_vote = "{\"event_id\":\"007\",\"voter_id\":\"test\",\"name_1\":\"222\",\"name_2\":\"999\",\"name_3\":\"333\"}";
 
     private String mytestpath = "/storage/emulated/0/test.csv";   // SDcard path
-    HandlerFile fh = new HandlerFile();
 
     @Before
     public void setUp() throws Exception {
-        System.out.println("setUp----------------------------------------");
-        fh.DeleteFromSD(mytestpath);
+        qh.DeleteFromSD(mytestpath);
     }
 
     @After
     public void tearDown() throws Exception {
-        System.out.println("tearDown----------------------------------------");
     }
 
     /*
@@ -47,13 +44,13 @@ public class QRCodeReaderActivityTest {
     @Test
     public void WriteIncorrectJson() throws Exception {
         try {
-            jsonObject = new JSONObject(json_msg);
+            json_obj = new JSONObject(incorrect_json_msg);
         } catch (JSONException e) {}
+        qh.Save(json_obj);
+        assertNotSame(" ", qh.Read());
+        assertNotSame("asda", qh.Read());
+        assertEquals("", qh.Read());
         qh.Clear();
-        qh.Save(jsonObject);
-      //  assertEquals(" ", qh.Read());             // fail
-      //  assertEquals("asda", qh.Read());          // fail
-//        assertEquals("", qh.Read());
     }
 
     /*
@@ -63,36 +60,14 @@ public class QRCodeReaderActivityTest {
     @Test
     public void WriteCorrectJson() throws Exception {
         try {
-            jsonObject = new JSONObject(correct_json_msg);
+            json_obj = new JSONObject(correct_json_msg);
         } catch (JSONException e) {}
-        qh.Save(jsonObject);
-        qh.Clear();
-        qh.Save(jsonObject);
-    //    assertEquals("", qh.Read());              // fail
-    //    assertEquals(" ", qh.Read());              // fail
-    //    assertEquals("asdaf", qh.Read());              // fail
+        qh.Save(json_obj);
+        assertNotSame("", qh.Read());
+        assertNotSame(" ", qh.Read());
+        assertNotSame("asdaf", qh.Read());
         assertEquals("test,222,999,333", qh.Read().substring(0,16));    // 16.10.12 as CSV added current date, equal substring will be ok
-    }
-
-    /*
-    *  confirm target file has been deleted after Clear() be called
-    * */
-    @Test
-    public void ClearFile() throws IOException {
-        try{
-            jsonObject = new JSONObject(correct_json_msg);
-        }catch  (JSONException e){}
-        qh.Save(jsonObject);
-    //  assertNull(qh.Read());                 // fail
-        assertNotNull(qh.Read());
-    //    assertEquals("asd", qh.Read());      // fail
-
         qh.Clear();
-
-     //   assertEquals(" ", qh.Read());        // fail
-     //   assertEquals("asdf", qh.Read());     // fail
-       // assertEquals("", qh.Read());
-
     }
 
     /*
@@ -101,9 +76,9 @@ public class QRCodeReaderActivityTest {
     @Test
     public void ContainDateByDateFormat() throws IOException, ParseException {
         try{
-            jsonObject = new JSONObject(correct_json_msg);
+            json_obj = new JSONObject(correct_json_msg);
         }catch  (JSONException e){}
-        qh.Save(jsonObject);
+        qh.Save(json_obj);
         String res = qh.Read().substring(17, 36);
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try {
@@ -111,21 +86,22 @@ public class QRCodeReaderActivityTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        qh.Clear();
     }
 
     /*
-    *
     *
     * */
     @Test
     public void WriteDate() throws IOException {
         try {
-            jsonObject = new JSONObject(correct_json_msg);
+            json_obj = new JSONObject(correct_json_msg);
         } catch (JSONException e) {}
-        qh.Save(jsonObject);
+        qh.Save(json_obj);
+        assertNotSame("test,222,999,333\n", qh.Read().substring(0,17));
+        assertNotSame("test,222,999,333", qh.Read());
         assertEquals("test,222,999,333", qh.Read().substring(0,16));
-//        assertEquals("test,222,999,333\n", qh.Read().substring(0,17));    // fail
-//        assertEquals("test,222,999,333", qh.Read());                      // fail
+        qh.Clear();
     }
 
     /**
@@ -135,8 +111,9 @@ public class QRCodeReaderActivityTest {
     @Test
     public void isWrite() throws Exception{
         String data = "test,111,222,333";
-        fh.WriteToSD(mytestpath, data);
-        assertEquals(data+"\n", fh.ReadFromSD(mytestpath));
+        qh.WriteToSD(mytestpath, data);
+        assertEquals(data+"\n", qh.ReadFromSD(mytestpath));
+        qh.DeleteFromSD(mytestpath);
     }
 
     /*
@@ -180,5 +157,29 @@ public class QRCodeReaderActivityTest {
         assertEquals(qh.CheckEventQRCode(j2), false);
         assertEquals(qh.CheckEventQRCode(j3), false);
         assertEquals(qh.CheckEventQRCode(j_ok), true);
+    }
+
+    /*
+    *   Search and delete the file which contains target string
+    * */
+    @Test
+    public void ClearTargetFile() throws IOException {
+        String target = "hello";
+        String file1 = qh.GetBasePath() + target + ".csv";
+        String file2 = qh.GetBasePath() + target + "_.csv";
+        String file3 = qh.GetBasePath() + "_" + target + ".csv";
+
+        try {
+            json_obj = new JSONObject(correct_json_msg);
+        } catch (JSONException e) {}
+        qh.Save(file1,json_obj);
+        qh.Save(file2 ,json_obj);
+        qh.Save(file3 ,json_obj);
+
+        qh.Clear(target);
+
+        assertEquals("", qh.Read(file1));
+        assertEquals("", qh.Read(file2));
+        assertEquals("", qh.Read(file3));
     }
 }

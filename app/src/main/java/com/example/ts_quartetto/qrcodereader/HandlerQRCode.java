@@ -32,7 +32,7 @@ public class HandlerQRCode extends HandlerFile {
     public String ChangeFilePath(String name) throws IOException {
         String newFileName = GetBasePath() + name + ".csv";
 
-        File from = new File(new String(basepath + StateControl.eventid + "_" +  StateControl.eventday + ".csv"));
+        File from = new File(new String(GetFilePath()));
         File to = new File(newFileName);
 
         FileChannel in = new FileInputStream(from).getChannel();
@@ -50,15 +50,13 @@ public class HandlerQRCode extends HandlerFile {
     public Boolean CheckEventQRCode(JSONObject obj)
     {
         if(jsonEventFormat.length != obj.length())
-        {
             return false;
-        }
+
         for(int i = 0; i < jsonEventFormat.length; i++)
             if(!obj.has(jsonEventFormat[i]))
-            {
                 return false;
-            }
-            return true;
+
+        return true;
     }
 
     public Boolean CheckVoteQRCode(JSONObject obj)
@@ -86,14 +84,29 @@ public class HandlerQRCode extends HandlerFile {
         catch (IOException e) {e.printStackTrace();}
     }
 
+    public void Save(String path, JSONObject json_obj) {
+        try {
+            WriteToSD(  path,
+                    json_obj.getString("voter_id") + "," +
+                    json_obj.getString("name_1") + "," +
+                    json_obj.getString("name_2") + "," +
+                    json_obj.getString("name_3") + "," +
+                    utility.GetVoteDate());
+        }
+        catch (JSONException e) {e.printStackTrace();}
+        catch (IOException e) {e.printStackTrace();}
+    }
+
     public String Read() throws IOException {
         return ReadFromSD(GetFilePath());
     }
 
+    public String Read(String path) throws IOException {
+        return ReadFromSD(path);
+    }
+
     public void Clear() {
-    //        DeleteFromSD(GetFilePath());
-        if(StateControl.eventid != " " && StateControl.eventday != 0)
-            DeleteLikeNameFromSD(GetBasePath(), StateControl.eventid + "_" +  StateControl.eventday);
+        DeleteFromSD(GetFilePath());
     }
 
     public void Clear(String likeName) {
