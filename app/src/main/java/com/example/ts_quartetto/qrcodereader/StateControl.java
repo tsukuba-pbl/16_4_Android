@@ -16,6 +16,7 @@ public class StateControl {
     public static String eventid = "";
     public static String eventname = "";
     public static Integer eventday = 0;
+    public static String macAddr;     // cannot get machineAddr except in AndroidActivity
 
     public static String lastEventid = "";
     public static String lastEventname = "";

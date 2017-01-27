@@ -16,17 +16,14 @@ public class Activity_3 extends AppCompatActivity {
     private String server_addr = new String("http://203.137.178.56/PosTom/votes/upload");
     Utility utility = new Utility();
     HandlerQRCode qrHandler = new HandlerQRCode();
-    private String macAddr;
+    private String macAddr4FileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3);
 
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wInfo = wifiManager.getConnectionInfo();
-        macAddr = wInfo.getMacAddress();
-        macAddr = macAddr.replaceAll("[^0-9a-zA-Z]","");
+        macAddr4FileName = StateControl.macAddr.replaceAll("[^0-9a-zA-Z]","");
 
         Button btn_uploadData = (Button)findViewById(R.id.btn_uploadData);
         btn_uploadData.setOnClickListener(new View.OnClickListener(){
@@ -37,7 +34,7 @@ public class Activity_3 extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            utility.HttpPost(qrHandler.ChangeFilePath(StateControl.eventid + "_" + StateControl.eventday + "_" + macAddr + "_" + utility.GetUNIXTime()), server_file_name, server_addr);
+                            utility.HttpPost(qrHandler.ChangeFilePath(StateControl.eventid + "_" + StateControl.eventday + "_" + macAddr4FileName + "_" + utility.GetUNIXTime()), server_file_name, server_addr);
                         } catch (IOException e) {e.printStackTrace();}
                     }
                 })).start();
