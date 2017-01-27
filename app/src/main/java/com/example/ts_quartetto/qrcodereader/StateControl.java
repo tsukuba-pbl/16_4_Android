@@ -13,12 +13,11 @@ public class StateControl {
     public static final int STATE_STEP_FINISH = 5;
 
     public static int state;
-    public static String eventid = " ";
-    public static String eventname = " ";
+    public static String eventid = "";
+    public static String eventname = "";
     public static Integer eventday = 0;
-    public static Boolean enableFileClear = false;
 
-    public static String lastEventid = " ";
-    public static String lastEventname = " ";
+    public static String lastEventid = "";
+    public static String lastEventname = "";
 
 }
