@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo wInfo = wifiManager.getConnectionInfo();
         StateControl.macAddr = wInfo.getMacAddress();
-    //    StateControl.macAddr = StateControl.macAddr.replaceAll("[^0-9a-zA-Z]","");
 
         TextView t_eventName = (TextView) findViewById(R.id.t_eventName);
         TextView t_eventId = (TextView) findViewById(R.id.t_eventId);
@@ -57,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
         btn_4.setEnabled(false);
         btn_management.setEnabled(false);
 
-        if (StateControl.state >= StateControl.STATE_STEP_2) {
+        if(StateControl.state < StateControl.STATE_STEP_2)
+            t_eventId.setText("端末ID：" + StateControl.macAddr + ")");
+        else{
             t_eventName.setText(StateControl.eventname);
             t_eventId.setText("(イベントID：" + StateControl.eventid + ", 端末ID：" + StateControl.macAddr + ")");
             t_eventDay.setText(String.valueOf(StateControl.eventday) + "日目");
