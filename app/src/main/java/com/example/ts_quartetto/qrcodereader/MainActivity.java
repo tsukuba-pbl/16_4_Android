@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btn_management.setEnabled(false);
 
         if(StateControl.state < StateControl.STATE_STEP_2)
-            t_eventId.setText("端末ID：" + StateControl.macAddr + ")");
+            t_eventId.setText("(端末ID：" + StateControl.macAddr + ")");
         else{
             t_eventName.setText(StateControl.eventname);
             t_eventId.setText("(イベントID：" + StateControl.eventid + ", 端末ID：" + StateControl.macAddr + ")");
