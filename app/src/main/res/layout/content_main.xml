@@ -117,7 +117,7 @@
 
     <TextView
         android:text=" "
-        android:textSize="70px"
+        android:textSize="60px"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

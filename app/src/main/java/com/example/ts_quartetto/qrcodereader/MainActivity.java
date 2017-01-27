@@ -1,9 +1,12 @@
 package com.example.ts_quartetto.qrcodereader;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,7 +24,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_management;
-    HandlerQRCode qrHandler = new HandlerQRCode();
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -32,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wInfo = wifiManager.getConnectionInfo();
+        StateControl.macAddr = wInfo.getMacAddress();
 
         TextView t_eventName = (TextView) findViewById(R.id.t_eventName);
         TextView t_eventId = (TextView) findViewById(R.id.t_eventId);
@@ -49,9 +56,11 @@ public class MainActivity extends AppCompatActivity {
         btn_4.setEnabled(false);
         btn_management.setEnabled(false);
 
-        if (StateControl.state >= StateControl.STATE_STEP_2) {
+        if(StateControl.state < StateControl.STATE_STEP_2)
+            t_eventId.setText("(端末ID：" + StateControl.macAddr + ")");
+        else{
             t_eventName.setText(StateControl.eventname);
-            t_eventId.setText("(イベントID：" + StateControl.eventid+ ")");
+            t_eventId.setText("(イベントID：" + StateControl.eventid + ", 端末ID：" + StateControl.macAddr + ")");
             t_eventDay.setText(String.valueOf(StateControl.eventday) + "日目");
             btn_2.setBackgroundColor(0xff33b5e5);
             btn_2.setEnabled(true);
