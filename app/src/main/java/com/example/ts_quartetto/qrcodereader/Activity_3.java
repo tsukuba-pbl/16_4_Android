@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class Activity_3 extends AppCompatActivity {
     private String server_file_name = new String("file");
-    private String server_addr = new String("http://203.137.178.56/PosTom/votes/upload");
+    private String server_addr = new String("http://203.137.178.56/votes/upload");
     Utility utility = new Utility();
     HandlerQRCode qrHandler = new HandlerQRCode();
     private String macAddr4FileName;
