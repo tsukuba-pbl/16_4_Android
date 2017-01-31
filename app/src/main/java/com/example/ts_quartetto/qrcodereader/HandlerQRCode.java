@@ -14,7 +14,7 @@ import java.nio.channels.FileChannel;
  */
 public class HandlerQRCode extends HandlerFile {
     private String[] jsonEventFormat = {"event_id", "event_name", "event_day"};
-    private String[] jsonVoteFormat = {"voter_id", "event_id", "name_1", "name_2", "name_3"};
+    private String[] jsonVoteFormat = {"voter_id", "event_id", "name_1"};
     private String basepath = "/storage/emulated/0/";
     private Utility utility = new Utility();
 
@@ -61,24 +61,38 @@ public class HandlerQRCode extends HandlerFile {
 
     public Boolean CheckVoteQRCode(JSONObject obj)
     {
-        if(jsonVoteFormat.length != obj.length())
-            return false;
+    //    if(jsonVoteFormat.length != obj.length())
+    //        return false;
 
-        for(int i = 0; i < jsonVoteFormat.length; i++)
-            if(!obj.has(jsonVoteFormat[i]))
+        for(int i = 0; i < jsonVoteFormat.length; i++) {
+            if (!obj.has(jsonVoteFormat[i])) {
                 return false;
-
+            }
+        }
         return true;
+    }
+
+    public String GetStringFromJson(JSONObject json_obj) throws JSONException {
+        String res = json_obj.getString("voter_id") + "," + json_obj.getString("name_1") + ",";
+        if(json_obj.has("name_2"))
+        {
+            res += json_obj.getString("name_2") + ",";
+            if(json_obj.has("name_3"))
+                res += json_obj.getString("name_3") + ",";
+            else
+                res += ",";
+        }
+        else
+            res += "," + ",";
+
+        res += utility.GetVoteDate();
+
+        return res;
     }
 
     public void Save(JSONObject json_obj) {
         try {
-            WriteToSD(  GetFilePath(),
-                    json_obj.getString("voter_id") + "," +
-                    json_obj.getString("name_1") + "," +
-                    json_obj.getString("name_2") + "," +
-                    json_obj.getString("name_3") + "," +
-                    utility.GetVoteDate());
+            WriteToSD(  GetFilePath(), GetStringFromJson(json_obj));
         }
         catch (JSONException e) {e.printStackTrace();}
         catch (IOException e) {e.printStackTrace();}
@@ -86,12 +100,7 @@ public class HandlerQRCode extends HandlerFile {
 
     public void Save(String path, JSONObject json_obj) {
         try {
-            WriteToSD(  path,
-                    json_obj.getString("voter_id") + "," +
-                    json_obj.getString("name_1") + "," +
-                    json_obj.getString("name_2") + "," +
-                    json_obj.getString("name_3") + "," +
-                    utility.GetVoteDate());
+            WriteToSD(  path, GetStringFromJson(json_obj));
         }
         catch (JSONException e) {e.printStackTrace();}
         catch (IOException e) {e.printStackTrace();}

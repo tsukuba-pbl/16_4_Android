@@ -159,7 +159,6 @@ public class VoteActivityReadVoteQRCode extends AppCompatActivity {
                 String msg = new String();
                 String btn = new String("　");
                 int displayTime = 2000;
-
                 if(!qrHandler.CheckVoteQRCode(file_content_json))
                 {
                     msg = "無効なQRコードのため、投票が失敗しました。";
