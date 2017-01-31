@@ -79,11 +79,7 @@ public class HandlerQRCode extends HandlerFile {
             res += json_obj.getString("name_2") + ",";
             if(json_obj.has("name_3"))
                 res += json_obj.getString("name_3") + ",";
-            else
-                res += ",";
         }
-        else
-            res += "," + ",";
 
         res += utility.GetVoteDate();
 
