@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -26,6 +29,12 @@ public class Activity_3 extends AppCompatActivity {
         macAddr4FileName = StateControl.macAddr.replaceAll("[^0-9a-zA-Z]","");
 
         Button btn_uploadData = (Button)findViewById(R.id.btn_uploadData);
+        TextView msg1 = (TextView)findViewById(R.id.t_msg_1);
+        TextView msg2 = (TextView)findViewById(R.id.t_msg_2);
+        TextView msg3 = (TextView)findViewById(R.id.textView6);
+        msg1.setTextSize(24);
+        msg2.setTextSize(24);
+        msg3.setTextSize(24);
         btn_uploadData.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

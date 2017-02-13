@@ -14,7 +14,6 @@
     <TextView
         android:text="2.投票データ送信ボタンを押す"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="33dp"
         android:textSize="70px"
         android:textColor="@android:color/black"
@@ -22,7 +21,8 @@
         android:id="@+id/t_msg_2"
         android:layout_below="@+id/t_msg_1"
         android:layout_alignLeft="@+id/t_msg_1"
-        android:layout_alignStart="@+id/t_msg_1" />
+        android:layout_alignStart="@+id/t_msg_1"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:text="1.このAndroidをオンライン環境に持ち込む"

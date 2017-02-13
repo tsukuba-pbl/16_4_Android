@@ -14,8 +14,7 @@
 
     <Button
         android:text="1.準備"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
         android:textSize="100px"
         android:gravity="center"
         android:background="@android:color/holo_blue_light"
@@ -25,40 +24,41 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="64dp"
-        android:layout_marginStart="64dp" />
+        android:layout_marginStart="64dp"
+        android:layout_height="100dp" />
 
     <Button
         android:text="3.集計"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
         android:textSize="100px"
         android:layout_marginTop="28dp"
         android:id="@+id/btn_3"
         android:layout_below="@+id/btn_1"
         android:layout_alignLeft="@+id/btn_1"
-        android:layout_alignStart="@+id/btn_1" />
+        android:layout_alignStart="@+id/btn_1"
+        android:layout_height="100dp" />
 
     <Button
         android:text="4.終了"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
         android:textSize="100px"
         android:id="@+id/btn_4"
         android:layout_alignTop="@+id/btn_3"
         android:layout_alignLeft="@+id/btn_2"
-        android:layout_alignStart="@+id/btn_2" />
+        android:layout_alignStart="@+id/btn_2"
+        android:layout_height="100dp" />
 
     <Button
         android:text="2.開催"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
         android:textSize="100px"
         android:id="@+id/btn_2"
         android:layout_marginRight="79dp"
         android:layout_marginEnd="79dp"
         android:layout_alignBottom="@+id/btn_1"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_height="100dp" />
 
     <CheckBox
         android:text="管理者モード"
@@ -73,14 +73,14 @@
 
     <Button
         android:text="管理者ページ"
-        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:textSize="50px"
         android:layout_marginTop="28dp"
         android:id="@+id/btn_management"
         android:layout_below="@+id/btn_3"
         android:layout_alignLeft="@+id/btn_3"
-        android:layout_alignStart="@+id/btn_3" />
+        android:layout_alignStart="@+id/btn_3"
+        android:layout_width="200dp" />
 
     <TextView
         android:text="※投票データを削除するには、まず管理モードにして管理者ページに遷移して下さい"
