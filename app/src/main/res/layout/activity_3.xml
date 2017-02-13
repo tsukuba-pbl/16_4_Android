@@ -71,7 +71,7 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="3.開催"
+        android:text="3.集計"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="100px"
